@@ -2,6 +2,8 @@
 
 session_start();
 
+require 'database.php';
+
 class Loader {
     public static function loadHeader() {
         include 'header.php';
