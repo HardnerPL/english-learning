@@ -13,50 +13,56 @@ require_once 'includes/loader.php';
     <?php Loader::loadHeader() ?>
     <body>
         <?php Loader::loadNavbar() ?>
-        <div class="container">
-            <div class="row mt-2">
-                <div class="col-md-9">
-                    <div class="p-2 bg-dark text-light font-weight-bold text-center border-left border-right">
-                        Words
-                    </div>
-                    <table class="table bg-dark text-light table-bordered">
-                        <?php
-                        if (isset($_GET['search'])) {
-                            $search = $mysql->escape($_GET['search']);
-                            $query = "SELECT * FROM words WHERE word LIKE '$search' OR translation LIKE '$search'";
-                        } else {
-                            $query = "SELECT * FROM words";
-                        }
-                        $result = $mysql->query($query);
-                        while ($row = $mysql->getRow($result)) {
-                            ?>
-                            <tr>
-                                <td>
-                                    <div class="font-weight-bold">
-                                        <?= $row['word']; ?> - <?= $row['translation']; ?>
-                                    </div>
-                                    <div class="font-weight-light">
-                                        <?= nl2br($row['explanation']); ?>
-                                    </div>
-                                </td>
-                            </tr>
-                        <?php } ?>
-                    </table>
-                </div>
-                <div class="col-md-3">
-                    <div class="bg-dark p-3">
-                        <h4 class="text-center text-light">Word finder</h4>
-                        <form class="input-group" action="" method="get">
-                            <input class="form-control" type="text" name="search" placeholder="Search">
-                            <span class="input-group-append">
-                                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
-                            </span>
-                        </form>
-                    </div>
-                </div>
+        <div class="container mt-4">
+            <div class="p-2 bg-dark text-light font-weight-bold text-center border-left border-right">
+                Words
             </div>
+            <table class="table bg-dark text-light table-bordered">
+                <?php for ($i = 0; $i < 50; $i++) { ?>
+                    <tr>
+                        <td class="col-9">
+                            <div class="font-weight-bold">
+                                english - polish
+                            </div>
+                            <div class="font-weight-light">
+                                explanation in a few words <br>
+                                "example for example no example"
+                            </div>
+                            <br>
+                            <small class="text-muted">
+                                <a href="">related,</a>
+                                <a href="">related,</a>
+                                <a href="">related,</a>
+                                <a href="">related</a>
+                            </small>
+                        </td>
+                        <td class="col-3">
+                            <b>Type:</b> Noun<br>
+                            <b>Use:</b> Everyday<br>
+                            <b>Difficulty:</b> Begginer<br>
+                            <b>Your level:</b> <i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><br>
+                            <div class="text-center mt-2">
+                                <a class="btn btn-primary" href="">Save</a>
+                            </div>
+                        </td>
+                    </tr>
+                <?php } ?>
+            </table>
         </div>
-        <?php Loader::loadFooter() ?>
-    </body>
-    <?php Loader::loadScripts(); ?>
+        <!--                    <div class="bg-dark p-3 mb-2">
+                                <h4 class="text-center text-light">Profile</h4>
+                                <div class="text-light">
+                                    <b>Username:</b> HardnerPL<br>
+                                    <b>Level:</b> 7<br>
+                                    <b>XP:</b> 1080 / 1920<br>
+                                    <div class="text-center mt-2">
+                                        <a class="btn btn-primary mr-1" href="">Profile</a>
+                                        <a class="btn btn-primary" href="">Learn</a>
+                                    </div>
+                                </div>
+                            </div>-->
+    </div>
+    <?php Loader::loadFooter() ?>
+</body>
+<?php Loader::loadScripts(); ?>
 </html>

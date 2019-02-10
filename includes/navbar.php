@@ -1,15 +1,22 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#"><i class="fab fa-github fa-lg"></i></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav ml-auto">
-            <?php if (isset($_SESSION['user'])) { ?>
-                <a class="nav-item nav-link" href="#"></a>
-                <a class="nav-item nav-link" href="#"></a>
-            <?php } ?>
-            <a class="nav-item nav-link" href="#">Log in</a>
+    <div class="container">
+        <a class="navbar-brand" href="index.php"><i class="fab fa-github fa-lg"></i></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ml-auto">
+                <form class="form-inline mr-2" action="" method="get">
+                    <input class="form-control" type="text" name="search" placeholder="Search">
+                    <span class="input-group-append">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                    </span>
+                </form>
+                <a class="nav-item nav-link" href="">Saved</a>
+                <a class="nav-item nav-link" href="">Learn</a>
+                <a class="nav-item nav-link" href="">Profile</a>
+                <a class="nav-item nav-link" href="">Log in</a>
+            </div>
         </div>
     </div>
 </nav>
