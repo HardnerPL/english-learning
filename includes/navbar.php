@@ -6,16 +6,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ml-auto">
-                <form class="form-inline mr-2" action="" method="get">
-                    <input class="form-control" type="text" name="search" placeholder="Search">
-                    <span class="input-group-append">
-                        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
-                    </span>
-                </form>
-                <a class="nav-item nav-link" href="">Saved</a>
-                <a class="nav-item nav-link" href="">Learn</a>
-                <a class="nav-item nav-link" href="">Profile</a>
-                <a class="nav-item nav-link" href="">Log in</a>
+                <a class="nav-item nav-link" href="contribute.php">Contribute</a>
+                <a class="nav-item nav-link" href="saved.php">Saved</a>
+                <a class="nav-item nav-link" href="login.php">Log in</a>
             </div>
         </div>
     </div>
