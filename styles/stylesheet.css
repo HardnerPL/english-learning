@@ -10,6 +10,11 @@
     color: gold;
 }
 
+.dark-hr {
+    background-color: grey;
+    margin: 10px 0 6px 0;
+}
+
 #login-form {
     width: 30%;
 }

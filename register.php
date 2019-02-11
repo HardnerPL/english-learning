@@ -29,7 +29,7 @@ require_once 'includes/loader.php';
                         <input class="form-control" type="password" placeholder="Repeat password" name="password" required>
                     </div>
                     <div class="text-center">
-                        <button class="btn btn-primary" type="submit" name="login">Log in</button>
+                        <button class="btn btn-primary" type="submit" name="login">Register</button>
                     </div>
                 </form>
                 <div class="text-center mt-2">

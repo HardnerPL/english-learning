@@ -20,7 +20,7 @@ require_once 'includes/loader.php';
                         Words
                     </div>
                     <table class="table bg-dark text-light table-bordered">
-                        <?php for ($i = 0; $i < 50; $i++) { ?>
+                        <?php for ($i = 0; $i < 10; $i++) { ?>
                             <tr>
                                 <td class="col-8">
                                     <div class="font-weight-bold">
@@ -30,8 +30,8 @@ require_once 'includes/loader.php';
                                         explanation in a few words <br>
                                         "example for example no example"
                                     </div>
-                                    <br>
-                                    <small class="text-muted">
+                                    <hr class="dark-hr">
+                                    <small>
                                         <a href="">related,</a>
                                         <a href="">related,</a>
                                         <a href="">related,</a>
@@ -54,24 +54,57 @@ require_once 'includes/loader.php';
                 <div class="col">
                     <div class="bg-dark p-3 mb-4">
                         <h4 class="text-center text-light">Word finder</h4>
-                        <form class="input-group mr-2" action="" method="get">
-                            <input class="form-control" type="text" name="search" placeholder="Search">
-                            <span class="input-group-append">
-                                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
-                            </span>
+                        <form class="mr-2" action="" method="get">
+                            <div class="input-group">
+                                <input class="form-control" type="text" name="search" placeholder="Search" required>
+                                <span class="input-group-append">
+                                    <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                </span>
+                            </div>
+                            <div class="form-check mt-1">
+                                <input class="form-check-input" type="checkbox" value="true" name="saved">
+                                <label class="form-check-label text-light" for="saved">Saved</label>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="bg-dark p-3 mb-4">
+                        <h4 class="text-center text-light">Log in</h4>
+                        <form action="login.php" method="post">
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="login" placeholder="Username">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="login" placeholder="Password">
+                            </div>
+                            <div class="text-center">
+                                <button name="login" type="submit" class="btn btn-primary">Log in</button>
+                            </div>
+                            <div class="text-center text-light mt-1">
+                                Don't have an account? <a href='register.php'>Register here!</a>
+                            </div>
                         </form>
                     </div>
                     <div class="bg-dark p-3 mb-4">
                         <h4 class="text-center text-light">Statistics</h4>
                         <div class="text-light">
+                            <b>Points:</b> 720<br>
                             <b>Lessons:</b> 12<br>
                             <b>Saved:</b> 80<br>
-                            <b><i class="text-color-gold fas fa-star"></i></b> 11
-                            <b><i class="text-color-silver fas fa-star"></i></b> 22
-                            <b><i class="text-color-brown fas fa-star"></i></b> 33
+                            <i class="text-color-gold fas fa-star"></i> 11
+                            <i class="text-color-silver fas fa-star"></i> 22
+                            <i class="text-color-brown fas fa-star"></i> 33
                             <div class="text-center mt-2">
+                                <a class="btn btn-primary mr-1" href="profile.php">Profile</a>
                                 <a class="btn btn-primary" href="learn.php">Learn</a>
                             </div>
+                        </div>
+                    </div>
+                    <div class="bg-dark p-3 mb-4">
+                        <h4 class="text-center text-light">Leaderboard</h4>
+                        <div class="text-light">
+                            <b>1. HardnerPL: 720</b><br>
+                            2. Rzeju: 420<br>
+                            3. klaud_ysia: 60<br>
                         </div>
                     </div>
                 </div>
