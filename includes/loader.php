@@ -3,6 +3,7 @@
 session_start();
 
 require 'database.php';
+require 'user.php';
 
 class Loader {
     public static function loadHeader() {
