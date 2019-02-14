@@ -18,7 +18,7 @@ if (isset($_POST['register'])) {
     else if ($password != $repeatPassword) {
         $registerResult = "DIFFERENT_PASSWORDS";
     } else {
-        $user = new User(0, $username, $password, 'user');
+        $user = new User(0, $username, password_hash($password, PASSWORD_DEFAULT));
         User::add($user);
         $registerResult = "SUCCESS";
     }

@@ -42,10 +42,12 @@ require_once 'includes/loader.php';
                                     <b>Type:</b> Noun<br>
                                     <b>Use:</b> Everyday<br>
                                     <b>Difficulty:</b> Begginer<br>
-                                    <b>Your level:</b> <i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><br>
-                                    <div class="text-center mt-2">
-                                        <a class="btn btn-primary" href="">Save</a>
-                                    </div>
+                                    <?php if (isset($_SESSION['user'])) { ?>
+                                        <b>Your level:</b> <i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><br>
+                                        <div class="text-center mt-2">
+                                            <a class="btn btn-primary" href="">Save</a>
+                                        </div>
+                                    <?php } ?>
                                 </td>
                             </tr>
                         <?php } ?>
@@ -67,44 +69,58 @@ require_once 'includes/loader.php';
                             </div>
                         </form>
                     </div>
-                    <div class="bg-dark p-3 mb-4">
-                        <h4 class="text-center text-light">Log in</h4>
-                        <form action="login.php" method="post">
-                            <div class="form-group">
-                                <input class="form-control" type="text" name="login" placeholder="Username">
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" type="text" name="login" placeholder="Password">
-                            </div>
-                            <div class="text-center">
-                                <button name="login" type="submit" class="btn btn-primary">Log in</button>
-                            </div>
-                            <div class="text-center text-light mt-1">
-                                Don't have an account? <a href='register.php'>Register here!</a>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="bg-dark p-3 mb-4">
-                        <h4 class="text-center text-light">Statistics</h4>
-                        <div class="text-light">
-                            <b>Points:</b> 720<br>
-                            <b>Lessons:</b> 12<br>
-                            <b>Saved:</b> 80<br>
-                            <i class="text-color-gold fas fa-star"></i> 11
-                            <i class="text-color-silver fas fa-star"></i> 22
-                            <i class="text-color-brown fas fa-star"></i> 33
-                            <div class="text-center mt-2">
-                                <a class="btn btn-primary mr-1" href="profile.php">Profile</a>
-                                <a class="btn btn-primary" href="learn.php">Learn</a>
+                    <?php if (!isset($_SESSION['user'])) { ?>
+                        <div class="bg-dark p-3 mb-4">
+                            <h4 class="text-center text-light">Log in</h4>
+                            <form action="login.php" method="post">
+                                <div class="form-group">
+                                    <input class="form-control" type="text" name="username" placeholder="Username">
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" type="password" name="password" placeholder="Password">
+                                </div>
+                                <div class="text-center">
+                                    <button name="login" type="submit" class="btn btn-primary">Log in</button>
+                                </div>
+                                <div class="text-center text-light mt-1">
+                                    Don't have an account? <a href='register.php'>Register here!</a>
+                                </div>
+                            </form>
+                        </div>
+                    <?php } ?>
+                    <?php if (isset($_SESSION['user'])) { ?>
+                        <div class="bg-dark p-3 mb-4">
+                            <h4 class="text-center text-light">Statistics</h4>
+                            <div class="text-light">
+                                <b>Points:</b> <?= $_SESSION['user']->getPoints() ?><br>
+                                <b>Lessons:</b> <?= $_SESSION['user']->getLessons() ?><br>
+                                <b>Saved:</b> <?= $_SESSION['user']->getSaved() ?><br>
+                                <i class="text-color-gold fas fa-star"></i> <?= $_SESSION['user']->getStars(5) ?>
+                                <i class="text-color-silver fas fa-star"></i> <?= $_SESSION['user']->getStars(4) ?>
+                                <i class="text-color-brown fas fa-star"></i> <?= $_SESSION['user']->getStars(3) ?>
+                                <div class="text-center mt-2">
+                                    <a class="btn btn-primary mr-1" href="profile.php">Profile</a>
+                                    <a class="btn btn-primary" href="learn.php">Learn</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    <?php } ?>
                     <div class="bg-dark p-3 mb-4">
                         <h4 class="text-center text-light">Leaderboard</h4>
                         <div class="text-light">
-                            <b>1. HardnerPL: 720</b><br>
-                            2. Rzeju: 420<br>
-                            3. klaud_ysia: 60<br>
+                            <?php
+                            $leaderboardResult = User::getLeaderboard();
+                            $resultCount = $mysql->resultCount();
+                            for ($i = 0; $i < $resultCount; $i++) {
+                                $row = $mysql->getRow($leaderboardResult);
+                                $user = User::fromUsername($row['username']);
+                                if (isset($_SESSION['user']) && $_SESSION['user']->getUsername() == $user->getUsername()) {
+                                    echo "<b>" . ($i + 1) . " " . $user->getUsername() . ": " . $user->getPoints() . "</b><br>";
+                                } else {
+                                    echo ($i + 1) . ". " . $user->getUsername() . ": " . $user->getPoints() . "<br>";
+                                }
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>

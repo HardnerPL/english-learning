@@ -1,9 +1,11 @@
 <?php
 
-session_start();
+ob_start();
 
 require 'database.php';
 require 'user.php';
+
+session_start();
 
 class Loader {
     public static function loadHeader() {
