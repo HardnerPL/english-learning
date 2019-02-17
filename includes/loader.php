@@ -4,6 +4,7 @@ ob_start();
 
 require 'database.php';
 require 'user.php';
+require 'word.php';
 
 session_start();
 

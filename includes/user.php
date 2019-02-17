@@ -80,18 +80,25 @@ class User {
         $mysql->query($query);
         return $mysql->resultCount();
     }
-
-    function getPoints() {
-//        $points = $this->getStars(1);
-//        $points += $this->getStars(2) * 20;
-//        $points += $this->getStars(3) * 40;
-//        $points += $this->getStars(4) * 60;
-//        $points += $this->getStars(5) * 100;
+    
+    function getWordStars($id) {
         global $mysql;
-        $query = "SELECT points FROM users WHERE username = '{$this->username}'";
+        $query = "SELECT stars FROM user_words WHERE userId = '{$this->id}' AND wordId = '$id'";
         $result = $mysql->query($query);
-        $row = $mysql->getRow($result);
-        return $row['points'];
+        return $mysql->getRow($result)['stars'];
+    }
+    
+    function getPoints() {
+        $points = $this->getStars(1);
+        $points += $this->getStars(2) * 20;
+        $points += $this->getStars(3) * 40;
+        $points += $this->getStars(4) * 60;
+        $points += $this->getStars(5) * 100;
+//        global $mysql;
+//        $query = "SELECT points FROM users WHERE username = '{$this->username}'";
+//        $result = $mysql->query($query);
+//        $row = $mysql->getRow($result);
+        return $points;
     }
 
     function verifyPassword($password) {
@@ -114,6 +121,22 @@ class User {
     static function getLeaderboard() {
         global $mysql;
         $query = "SELECT * FROM users ORDER BY points DESC";
-        return $mysql->query($query);
+        $leaderboardResult = $mysql->query($query);
+        $resultCount = $mysql->resultCount();
+        for ($i = 0; $i < $resultCount; $i++) {
+            $row = $mysql->getRow($leaderboardResult);
+            $users[$i] = User::fromUsername($row['username']);
+        }
+        usort($users, function($firstUser, $secondUser) {
+            return $firstUser->getPoints() < $secondUser->getPoints();
+        });
+        return $users;
     }
+    
+    function saveWord($id) {
+        global $mysql;
+        $query = "INSERT INTO user_words (wordId, userId) VALUES ('$id', '{$this->getId()}')";
+        $mysql->query($query);
+    }
+
 }
