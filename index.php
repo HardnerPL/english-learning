@@ -27,11 +27,18 @@ if (isset($_GET['save']) && isset($user)) {
             <div class="row">
                 <div class="col-9">
                     <div class="p-2 bg-dark text-light font-weight-bold text-center border-left border-right">
-                        Words
+                        Dictionary
                     </div>
                     <table class="table bg-dark text-light table-bordered">
                         <?php
                         $query = "SELECT * FROM words WHERE status = 'accepted'";
+                        if (isset($_GET['search'])) {
+                            $search = $mysql->escape($_GET['search']);
+                            $query .= " AND name LIKE '%$search%'";
+                        }
+                        if (isset($_GET['saved']) && isset($user)) {
+                            $query .= " AND id IN (SELECT wordId FROM user_words WHERE userId = '{$user->getId()}')";
+                        }
                         $selectWordsResult = $mysql->query($query);
                         while ($row = $mysql->getRow($selectWordsResult)) {
                             $word = Word::fromRow($row);
@@ -44,18 +51,11 @@ if (isset($_GET['save']) && isset($user)) {
                                     <div class="font-weight-light">
                                         <?= nl2br($word->getExplanation()) ?>
                                     </div>
-                                    <hr class="dark-hr">
-                                    <small>
-                                        <a href="">related,</a>
-                                        <a href="">related,</a>
-                                        <a href="">related,</a>
-                                        <a href="">related</a>
-                                    </small>
                                 </td>
                                 <td class="col-4">
-                                    <b>Type:</b> <?= $word->getType() ?><br>
-                                    <b>Acceptable:</b> <?= $word->getAcceptable() ?><br>
-                                    <b>Difficulty:</b> <?= $word->getDifficulty() ?><br>
+                                    <b>Type:</b> <?= ucfirst($word->getType()) ?><br>
+                                    <b>Acceptable:</b> <?= ucfirst($word->getAcceptable()) ?><br>
+                                    <b>Difficulty:</b> <?= ucfirst($word->getDifficulty()) ?><br>
                                     <?php
                                     if (isset($user)) {
                                         $stars = $user->getWordStars($word->getId());
@@ -75,26 +75,27 @@ if (isset($_GET['save']) && isset($user)) {
                                             }
                                             ?>
                                             <div><b>Your level: </b><span class='<?= $textColor ?>'><?php
-                                                for ($i = 0; $i < 5; $i++) {
-                                                    if ($stars > 0) {
-                                                        echo "<i class='fas fa-star'></i>";
-                                                        $stars--;
-                                                    } else {
-                                                        echo "<i class='far fa-star'></i>";
+                                                    for ($i = 0; $i < 5; $i++) {
+                                                        if ($stars > 0) {
+                                                            echo "<i class='fas fa-star'></i>";
+                                                            $stars--;
+                                                        } else {
+                                                            echo "<i class='far fa-star'></i>";
+                                                        }
                                                     }
-                                                }
-                                                ?></span></div>
+                                                    ?></span></div>
                                             <!--  !-->
-        <?php } else { ?>
+                                        <?php } else { ?>
                                             <div class="text-center mt-2">
                                                 <a class="btn btn-primary" href="?save=<?= $word->getId() ?>">Save</a>
                                             </div>
-                                        <?php }
+                                            <?php
+                                        }
                                     }
                                     ?>
                                 </td>
                             </tr>
-<?php } ?>
+                        <?php } ?>
                     </table>
                 </div>
                 <div class="col">
@@ -102,13 +103,21 @@ if (isset($_GET['save']) && isset($user)) {
                         <h4 class="text-center text-light">Word finder</h4>
                         <form class="mr-2" action="" method="get">
                             <div class="input-group">
-                                <input class="form-control" type="text" name="search" placeholder="Search" required>
+                                <input class="form-control" type="text" name="search" placeholder="Search" value="<?php
+                                if (isset($search)) {
+                                    echo $search;
+                                }
+                                ?>">
                                 <span class="input-group-append">
                                     <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
                                 </span>
                             </div>
                             <div class="form-check mt-1">
-                                <input class="form-check-input" type="checkbox" value="true" name="saved">
+                                <input class="form-check-input" type="checkbox" value="t" name="saved" <?php
+                                if (isset($_GET['saved'])) {
+                                    echo "checked";
+                                }
+                                ?>>
                                 <label class="form-check-label text-light" for="saved">Saved</label>
                             </div>
                         </form>
@@ -148,7 +157,7 @@ if (isset($_GET['save']) && isset($user)) {
                                 </div>
                             </div>
                         </div>
-<?php } ?>
+                            <?php } ?>
                     <div class="bg-dark p-3 mb-4">
                         <h4 class="text-center text-light">Leaderboard</h4>
                         <div class="text-light">
