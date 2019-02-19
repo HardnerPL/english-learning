@@ -46,7 +46,7 @@ if (isset($_GET['save']) && isset($user)) {
                             <tr>
                                 <td class="col-8">
                                     <div class="font-weight-bold">
-                                        <?= $word->getName() ?>
+                                        <a class="text-light" href="word.php?id=<?= $word->getId() ?>"><?= $word->getName() ?></a>
                                     </div>
                                     <div class="font-weight-light">
                                         <?= nl2br($word->getExplanation()) ?>

@@ -23,6 +23,7 @@ class Word {
     
     static function fromId($id) {
         global $mysql;
+        $id = $mysql->escape($id);
         $query = "SELECT * FROM words WHERE id = $id";
         $result = $mysql->query($query);
         $row = $mysql->getRow($result);
