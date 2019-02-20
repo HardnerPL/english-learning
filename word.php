@@ -10,14 +10,13 @@ if (isset($_SESSION['user'])) {
 if (isset($_GET['save']) && isset($user)) {
     $id = $_GET['save'];
     $user->saveWord($id);
-    header("Location: word.php?id=" . $id);
+    Loader::url("word.php?id=$id");
 }
 
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
+if (isset($_GET['id']) && $id = $_GET['id']) {
     $word = Word::fromId($id);
 } else {
-    //header("Location: index.php");
+    Loader::url("index.php");
 }
 ?>
 
@@ -37,9 +36,6 @@ if (isset($_GET['id'])) {
                             <?= nl2br($word->getExplanation()) ?>
                         </div>
                         <hr class="dark-hr">
-                        <b>Last trained:</b> <?= date("m/d/y") ?><br>
-                        <b>Expires:</b> <?= date("m/d/y") ?><br>
-                        <b>Streak:</b> <?= 8 ?><br>
                         <?php
                         if (isset($user)) {
                             $stars = $user->getWordStars($word->getId());
@@ -58,16 +54,18 @@ if (isset($_GET['id'])) {
                                         $textColor = "";
                                 }
                                 ?>
+                                <b>Last trained:</b> <?= $user->getWordLessonDate($word->getId()) ?><br>
+                                <b>Streak:</b> <?= $user->getWordStreak($word->getId()) ?><br>
                                 <div><b>Your level: </b><span class='<?= $textColor ?>'><?php
-                        for ($i = 0; $i < 5; $i++) {
-                            if ($stars > 0) {
-                                echo "<i class='fas fa-star'></i>";
-                                $stars--;
-                            } else {
-                                echo "<i class='far fa-star'></i>";
-                            }
-                        }
-                                ?></span></div>
+                                        for ($i = 0; $i < 5; $i++) {
+                                            if ($stars > 0) {
+                                                echo "<i class='fas fa-star'></i>";
+                                                $stars--;
+                                            } else {
+                                                echo "<i class='far fa-star'></i>";
+                                            }
+                                        }
+                                        ?></span></div>
                                 <!--  !-->
                             <?php } else { ?>
                                 <div class="mt-2">
@@ -81,8 +79,43 @@ if (isset($_GET['id'])) {
                         <b>Type:</b> <?= ucfirst($word->getType()) ?><br>
                         <b>Acceptable:</b> <?= ucfirst($word->getAcceptable()) ?><br>
                         <b>Difficulty:</b> <?= ucfirst($word->getDifficulty()) ?><br>
-                        <b>Synonyms:</b> <a href="">synonym</a><br>
-                        <b>Related:</b> <a href="">related</a><br>
+                        <hr class="dark-hr">
+                        <b>Synonyms: </b>
+                        <?php
+                        $synonyms = explode(",", $word->getSynonyms());
+                        $i = 0;
+                        $size = sizeof($synonyms);
+                        foreach ($synonyms as $name) {
+                            $synonym = Word::fromName(trim($name));
+                            if (isset($synonym)) {
+                                echo "<a href=word.php?id={$synonym->getId()}>$name</a>";
+                            } else {
+                                echo "<a href=contribute.php?name=$name></a>";
+                            }
+                        }
+                        if (empty($name)) {
+                            echo "None";
+                        }
+                        ?>
+                        <br>
+                        <b>Related: </b>
+                        <?php
+                        $related = explode(",", $word->getRelated());
+                        $i = 0;
+                        $size = sizeof($related);
+                        foreach ($related as $name) {
+                            $rel = Word::fromName(trim($name));
+                            if (isset($rel)) {
+                                echo "<a href=word.php?id={$rel->getId()}>$name</a>";
+                            } else {
+                                echo "<a href=contribute.php?name=$name></a>";
+                            }
+                        }
+                        if (empty($name)) {
+                            echo "None";
+                        }
+                        ?>
+                        <br>
                     </div>
                 </div>
                 <div class="col">
@@ -91,10 +124,10 @@ if (isset($_GET['id'])) {
                         <form class="mr-2" action="index.php" method="get">
                             <div class="input-group">
                                 <input class="form-control" type="text" name="search" placeholder="Search" value="<?php
-                        if (isset($search)) {
-                            echo $search;
-                        }
-                        ?>">
+                                if (isset($search)) {
+                                    echo $search;
+                                }
+                                ?>">
                                 <span class="input-group-append">
                                     <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
                                 </span>
@@ -104,7 +137,7 @@ if (isset($_GET['id'])) {
                                 if (isset($_GET['saved'])) {
                                     echo "checked";
                                 }
-                        ?>>
+                                ?>>
                                 <label class="form-check-label text-light" for="saved">Saved</label>
                             </div>
                         </form>

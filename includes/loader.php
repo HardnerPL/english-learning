@@ -24,5 +24,10 @@ class Loader {
     public static function loadNavbar() {
         include 'navbar.php';
     }
+    
+    public static function url($url) {
+        header("Location: $url");
+        die();
+    }
 }
 
