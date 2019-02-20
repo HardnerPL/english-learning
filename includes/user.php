@@ -80,14 +80,53 @@ class User {
         $mysql->query($query);
         return $mysql->resultCount();
     }
-    
+
     function getWordStars($id) {
         global $mysql;
         $query = "SELECT stars FROM user_words WHERE userId = '{$this->id}' AND wordId = '$id'";
         $result = $mysql->query($query);
         return $mysql->getRow($result)['stars'];
     }
+
+    function getWordLessonDate($id) {
+        global $mysql;
+        $query = "SELECT lessonDate FROM user_words WHERE userId = '{$this->id}' AND wordId = '$id'";
+        $result = $mysql->query($query);
+        if ($date = $mysql->getRow($result)['lessonDate']) {
+            return $date;
+        }
+        return "Never";
+    }
     
+    function getWordStreak($id) {
+        global $mysql;
+        $query = "SELECT streak FROM user_words WHERE userId = '{$this->id}' AND wordId = '$id'";
+        $result = $mysql->query($query);
+        return $mysql->getRow($result)['streak'];
+    }
+    
+// TO DO
+//    function getWordExpireDate($id) {
+//        global $mysql;
+//        $query = "SELECT expireLeve FROM user_words WHERE userId = '{$this->id}' AND wordId = '$id'";
+//        $result = $mysql->query($query);
+//        $level = $mysql->getRow($result)['expireLevel'];
+//        $date = $this->getWordLessonDate($id);
+//        switch ($level) {
+//            case 1:
+//                break;
+//            case 2:
+//                break;
+//            case 3:
+//                break;
+//            case 4:
+//                break;
+//            case 5:
+//                break;
+//            case 6:
+//        }
+//    }
+
     function getPoints() {
         $points = $this->getStars(1);
         $points += $this->getStars(2) * 20;
@@ -132,7 +171,7 @@ class User {
         });
         return $users;
     }
-    
+
     function saveWord($id) {
         global $mysql;
         $query = "INSERT INTO user_words (wordId, userId) VALUES ('$id', '{$this->getId()}')";
