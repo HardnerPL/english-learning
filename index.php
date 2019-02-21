@@ -15,7 +15,7 @@ if (isset($_SESSION['user'])) {
 if (isset($_GET['save']) && isset($user)) {
     $saveId = $_GET['save'];
     $user->saveWord($saveId);
-    header("Location: index.php");
+    Loader::url("index.php");
 }
 ?>
 
@@ -37,7 +37,18 @@ if (isset($_GET['save']) && isset($user)) {
                             $query .= " AND name LIKE '%$search%'";
                         }
                         if (isset($_GET['saved']) && isset($user)) {
-                            $query .= " AND id IN (SELECT wordId FROM user_words WHERE userId = '{$user->getId()}')";
+                            $saved = $_GET['saved'];
+                            if ($saved == "true") {
+                                $query .= " AND id IN (SELECT wordId FROM user_words WHERE userId = '{$user->getId()}')";
+                            } else if ($saved == "false") {
+                                $query .= " AND id NOT IN (SELECT wordId FROM user_words WHERE userId = '{$user->getId()}')";
+                            }
+                        }
+                        if (isset($_GET['type'])) {
+                            $type = $_GET['type'];
+                            if ($type != "all") {
+                                $query .= " AND type = '$type'";
+                            }
                         }
                         $selectWordsResult = $mysql->query($query);
                         while ($row = $mysql->getRow($selectWordsResult)) {
@@ -112,17 +123,26 @@ if (isset($_GET['save']) && isset($user)) {
                                     <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
                                 </span>
                             </div>
-                            <div class="form-check mt-1">
-                                <input class="form-check-input" type="checkbox" value="t" name="saved" <?php
-                                if (isset($_GET['saved'])) {
-                                    echo "checked";
-                                }
-                                ?>>
-                                <label class="form-check-label text-light" for="saved">Saved</label>
+                            <div class="form-inline mt-2">
+                                <div class="mr-2 w-40 mr-2">
+                                    <select class="form-control-sm" name="saved">
+                                        <option value="all">All</option>
+                                        <option value="true" <?= isset($saved) && $saved == "true" ? "selected" : "" ?>>Saved</option>
+                                        <option value="false" <?= isset($saved) && $saved == "false" ? "selected" : "" ?>>Not saved</option>
+                                    </select>
+                                </div>
+                                <div class="w-40">
+                                    <select class="form-control-sm" name="type">
+                                        <option value="all">All types</option>
+                                        <option value="noun" <?= isset($type) && $type == "noun" ? "selected" : "" ?>>Noun</option>
+                                        <option value="verb" <?= isset($type) && $type == "verb" ? "selected" : "" ?>>Verb</option>
+                                        <option value="phrase" <?= isset($type) && $type == "phrase" ? "selected" : "" ?>>Phrase</option>
+                                    </select>
+                                </div>
                             </div>
                         </form>
                     </div>
-<?php if (!isset($user)) { ?>
+                    <?php if (!isset($user)) { ?>
                         <div class="bg-dark p-3 mb-4">
                             <h4 class="text-center text-light">Log in</h4>
                             <form action="login.php" method="post">
@@ -140,8 +160,8 @@ if (isset($_GET['save']) && isset($user)) {
                                 </div>
                             </form>
                         </div>
-<?php } ?>
-<?php if (isset($user)) { ?>
+                    <?php } ?>
+                    <?php if (isset($user)) { ?>
                         <div class="bg-dark p-3 mb-4">
                             <h4 class="text-center text-light">Statistics</h4>
                             <div class="text-light">
@@ -157,7 +177,7 @@ if (isset($_GET['save']) && isset($user)) {
                                 </div>
                             </div>
                         </div>
-                            <?php } ?>
+                    <?php } ?>
                     <div class="bg-dark p-3 mb-4">
                         <h4 class="text-center text-light">Leaderboard</h4>
                         <div class="text-light">
@@ -176,8 +196,7 @@ if (isset($_GET['save']) && isset($user)) {
                 </div>
             </div>
         </div>
-    </div>
-<?php Loader::loadFooter() ?>
-</body>
-<?php Loader::loadScripts(); ?>
+        <?php Loader::loadFooter() ?>
+    </body>
+    <?php Loader::loadScripts(); ?>
 </html>

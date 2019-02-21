@@ -8,6 +8,12 @@ require 'word.php';
 
 session_start();
 
+function printor($string) {
+    if (isset($string)) {
+        echo "string";
+    }
+}
+
 class Loader {
     public static function loadHeader() {
         include 'header.php';
