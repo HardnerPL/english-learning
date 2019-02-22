@@ -8,10 +8,11 @@ require 'word.php';
 
 session_start();
 
-function printor($string) {
+function issetor($string, $default) {
     if (isset($string)) {
-        echo "string";
+        return $string;
     }
+    return $default;
 }
 
 class Loader {

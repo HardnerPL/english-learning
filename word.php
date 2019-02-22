@@ -77,7 +77,7 @@ if (isset($_GET['id']) && $id = $_GET['id']) {
                         ?>
                         <hr class="dark-hr">
                         <b>Type:</b> <?= ucfirst($word->getType()) ?><br>
-                        <b>Acceptable:</b> <?= ucfirst($word->getAcceptable()) ?><br>
+                        <b>Acceptable:</b> <?= ucfirst($word->getUse()) ?><br>
                         <b>Difficulty:</b> <?= ucfirst($word->getDifficulty()) ?><br>
                         <hr class="dark-hr">
                         <b>Synonyms: </b>
@@ -86,12 +86,14 @@ if (isset($_GET['id']) && $id = $_GET['id']) {
                         $i = 0;
                         $size = sizeof($synonyms);
                         foreach ($synonyms as $name) {
-                            $synonym = Word::fromName(trim($name));
+                            $name = trim($name);
+                            $synonym = Word::fromName($name);
                             if (isset($synonym)) {
                                 echo "<a href=word.php?id={$synonym->getId()}>$name</a>";
                             } else {
-                                echo "<a href=contribute.php?name=$name></a>";
+                                echo "<a href=contribute.php?name=$name>$name</a>";
                             }
+                            echo " ";
                         }
                         if (empty($name)) {
                             echo "None";
@@ -104,11 +106,12 @@ if (isset($_GET['id']) && $id = $_GET['id']) {
                         $i = 0;
                         $size = sizeof($related);
                         foreach ($related as $name) {
-                            $rel = Word::fromName(trim($name));
+                            $name = trim($name);
+                            $rel = Word::fromName($name);
                             if (isset($rel)) {
                                 echo "<a href=word.php?id={$rel->getId()}>$name</a>";
                             } else {
-                                echo "<a href=contribute.php?name=$name></a>";
+                                echo "<a href=contribute.php?name=$name>$name</a>";
                             }
                         }
                         if (empty($name)) {

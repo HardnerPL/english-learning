@@ -65,7 +65,7 @@ if (isset($_GET['save']) && isset($user)) {
                                 </td>
                                 <td class="col-4">
                                     <b>Type:</b> <?= ucfirst($word->getType()) ?><br>
-                                    <b>Acceptable:</b> <?= ucfirst($word->getAcceptable()) ?><br>
+                                    <b>Use:</b> <?= ucfirst($word->getUse()) ?><br>
                                     <b>Difficulty:</b> <?= ucfirst($word->getDifficulty()) ?><br>
                                     <?php
                                     if (isset($user)) {

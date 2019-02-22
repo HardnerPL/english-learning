@@ -10,6 +10,8 @@ require_once 'includes/loader.php';
 
 if (isset($_SESSION['user'])) {
     $user = $_SESSION['user'];
+} else {
+    Loader::url("index.php");
 }
 
 if (isset($_GET['save']) && isset($user)) {

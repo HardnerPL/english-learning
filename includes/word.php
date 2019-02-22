@@ -6,19 +6,19 @@ class Word {
     private $name;
     private $explanation;
     private $type;
-    private $acceptable;
+    private $use;
     private $difficulty;
     private $status;
     private $userId;
     private $synonyms;
     private $related;
 
-    function __construct($id, $name, $explanation, $type, $acceptable, $difficulty, $status, $userId, $synonyms, $related) {
+    function __construct($id, $name, $explanation, $type, $use, $difficulty, $status, $userId, $synonyms, $related) {
         $this->id = $id;
         $this->name = $name;
         $this->explanation = $explanation;
         $this->type = $type;
-        $this->acceptable = $acceptable;
+        $this->use = $use;
         $this->difficulty = $difficulty;
         $this->status = $status;
         $this->userId = $userId;
@@ -47,7 +47,7 @@ class Word {
     }
 
     static function fromRow($row) {
-        return new Word($row['id'], $row['name'], $row['explanation'], $row['type'], $row['acceptable'], $row['difficulty'], $row['status'], $row['userId'], $row['synonyms'], $row['related']);
+        return new Word($row['id'], $row['name'], $row['explanation'], $row['type'], $row['use'], $row['difficulty'], $row['status'], $row['userId'], $row['synonyms'], $row['related']);
     }
 
     function getId() {
@@ -66,8 +66,8 @@ class Word {
         return $this->type;
     }
 
-    function getAcceptable() {
-        return $this->acceptable;
+    function getUse() {
+        return $this->use;
     }
 
     function getDifficulty() {
@@ -88,6 +88,31 @@ class Word {
 
     function getRelated() {
         return $this->related;
+    }
+    
+    public static function add($word) {
+        global $mysql;
+        $query = "INSERT INTO words (name, explanation, type, `use`, difficulty, synonyms, related, status, userId) VALUES "
+                . "('{$word->getName()}', "
+                . "'{$word->getExplanation()}', "
+                . "'{$word->getType()}', "
+                . "'{$word->getUse()}', "
+                . "'{$word->getDifficulty()}', "
+                . "'{$word->getSynonyms()}', "
+                . "'{$word->getRelated()}', "
+                . "'{$word->getStatus()}', "
+                . "'{$word->getUserId()}')";
+        $mysql->query($query);
+    }
+    
+    public static function isWordCreated($name) {
+        global $mysql;
+        $name = $mysql->escape($name);
+        $query = "SELECT * FROM words WHERE name = '$name'";
+        $mysql->query($query);
+        if ($mysql->resultCount() != 0) {
+            return true;
+        } return false;
     }
 
 }
