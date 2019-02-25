@@ -18,17 +18,17 @@ if (isset($_SESSION['user'])) {
 <html>
     <?php Loader::loadHeader() ?>
     <body>
+        <script>
+            function Word(name, explanation, synonyms) {
+                this.name = name;
+                this.explanation = explanation;
+                this.synonyms = synonyms;
+            }
+            var words = new Array();
+            var current = 0;
+        </script>
         <?php Loader::loadNavbar() ?>
         <div class="container mt-4">
-            <script>
-                function Word(name, explanation, synonyms) {
-                    this.name = name;
-                    this.explanation = explanation;
-                    this.synonyms = synonyms;
-                }
-                
-                var words = new Array();
-            </script>
             <?php
             if (isset($_GET['learn'])) {
                 $query = "SELECT * FROM words WHERE status = 'accepted'";
@@ -46,11 +46,23 @@ if (isset($_SESSION['user'])) {
                     ?>
                     <script>
                         var name = '<?= $word->getName() ?>';
-                        var explanation = "<?= $mysql->escape($word->getExplanation()) ?>";
+                        var explanation = "<?= $mysql->escape($word->getDefinition()) ?>";
                         words.push(new Word(name, explanation, ""));
                     </script>
-                    <?php
-                }
+                <?php }
+                ?>
+                <div class="bg-dark text-light p-3 w-50 mx-auto">
+                    <div class="mx-auto w-50">
+                        <input class="form-control" id="answear" type="text" placeholder="Your answear"></input>
+                    </div>
+                    <hr class="dark-hr">
+                    <div id="explanation" class="font-weight-light">
+                    </div>
+                    <div class="text-center">
+                        <button id="confirm" class="btn btn-primary" type="submit" name="learn">Confirm</button>
+                    </div>
+                </div>
+                <?php
             } else {
                 ?>
                 <form id="learn-form" class="mx-auto" action="" method="get">
@@ -73,10 +85,24 @@ if (isset($_SESSION['user'])) {
                         <button class="btn btn-primary" type="submit" name="learn">Learn</button>
                     </div>
                 </form>
-        <?php } ?>
+            <?php } ?>
         </div>
-    <?php Loader::loadFooter() ?>
+        <?php Loader::loadFooter() ?>
     </body>
-<?php Loader::loadScripts(); ?>
+    <?php Loader::loadScripts(); ?>
+    <script>
+        $(function () {
+            $("#explanation").html(words[current].explanation);
+        })
+        
+        $("#confirm").click(function() {
+            var answear = $("#answear").val();
+            if (answear == words[current].name) {
+                alert("CORRECT!");
+            } else {
+                alert("INCORRECT! Answear was " + words[current].name);
+            }
+        })
+    </script>
 </html>
 

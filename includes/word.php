@@ -61,6 +61,10 @@ class Word {
     function getExplanation() {
         return $this->explanation;
     }
+    
+    function getDefinition() {
+        return explode(PHP_EOL, $this->explanation)[0];
+    }
 
     function getType() {
         return $this->type;
