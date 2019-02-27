@@ -11,12 +11,6 @@ require_once 'includes/loader.php';
 if (isset($_SESSION['user'])) {
     $user = $_SESSION['user'];
 }
-
-if (isset($_GET['save']) && isset($user)) {
-    $saveId = $_GET['save'];
-    $user->saveWord($saveId);
-    Loader::url("index.php");
-}
 ?>
 
 <html>
@@ -98,7 +92,7 @@ if (isset($_GET['save']) && isset($user)) {
                                             <!--  !-->
                                         <?php } else { ?>
                                             <div class="text-center mt-2">
-                                                <a class="btn btn-primary" href="?save=<?= $word->getId() ?>">Save</a>
+                                                <a onclick="save(<?= $word->getId() ?>, $(this))" class="btn btn-primary">Save</a>
                                             </div>
                                             <?php
                                         }

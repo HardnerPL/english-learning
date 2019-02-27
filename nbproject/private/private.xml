@@ -3,10 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Programming/xampp/htdocs/english-learning/learn.php</file>
-            <file>file:/D:/Programming/xampp/htdocs/english-learning/includes/word.php</file>
-            <file>file:/D:/Programming/xampp/htdocs/english-learning/word.php</file>
+            <file>file:/D:/Programming/xampp/htdocs/english-learning/includes/scripts.php</file>
+            <file>file:/D:/Programming/xampp/htdocs/english-learning/includes/loader.php</file>
+            <file>file:/D:/Programming/xampp/htdocs/english-learning/includes/save.php</file>
             <file>file:/D:/Programming/xampp/htdocs/english-learning/index.php</file>
+            <file>file:/D:/Programming/xampp/htdocs/english-learning/includes/navbar.php</file>
         </group>
     </open-files>
 </project-private>

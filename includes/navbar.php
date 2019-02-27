@@ -8,7 +8,7 @@
             <a class="nav-item nav-link" href="learn.php">Learn</a>
             <a class="nav-item nav-link" href="contribute.php">Contribute</a>
             <a class="nav-item nav-link" href="profile.php">Profile</a>
-            <a class="nav-item nav-link" href="login.php?logout">Log out</a>
+            <a onclick="logout()" class="nav-item nav-link" href="">Log out</a>
             <?php } else { ?>
             <a class="nav-item nav-link" href="login.php">Log in</a>
             <?php } ?>
