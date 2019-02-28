@@ -17,75 +17,33 @@ if (isset($_SESSION['user'])) {
 
 <html>
     <?php Loader::loadHeader() ?>
+    <script>
+        var words = new Array();
+        var current = 0;
+    </script>
     <body>
-        <script>
-            function Word(name, explanation, synonyms) {
-                this.name = name;
-                this.explanation = explanation;
-                this.synonyms = synonyms;
-            }
-            var words = new Array();
-            var current = 0;
-        </script>
         <?php Loader::loadNavbar() ?>
-        <div class="container mt-4">
-            <?php
-            if (isset($_GET['learn'])) {
-                $query = "SELECT * FROM words WHERE status = 'accepted'";
-                $saved = $_GET['saved'];
-                $count = $_GET['count'];
-                if ($saved == "true") {
-                    $query .= " AND id IN (SELECT wordId FROM user_words WHERE userId = '{$user->getId()}')";
-                } else if ($saved == "false") {
-                    $query .= " AND id NOT IN (SELECT wordId FROM user_words WHERE userId = '{$user->getId()}')";
-                }
-                $query .= " ORDER BY RAND() LIMIT $count";
-                $result = $mysql->query($query);
-                while ($row = $mysql->getRow($result)) {
-                    $word = Word::fromRow($row);
-                    ?>
-                    <script>
-                        var name = '<?= $word->getName() ?>';
-                        var explanation = "<?= $mysql->escape($word->getDefinition()) ?>";
-                        words.push(new Word(name, explanation, ""));
-                    </script>
-                <?php }
-                ?>
-                <div class="bg-dark text-light p-3 w-50 mx-auto">
-                    <div class="mx-auto w-50">
-                        <input class="form-control" id="answear" type="text" placeholder="Your answear"></input>
-                    </div>
-                    <hr class="dark-hr">
-                    <div id="explanation" class="font-weight-light">
-                    </div>
-                    <div class="text-center">
-                        <button id="confirm" class="btn btn-primary" type="submit" name="learn">Confirm</button>
-                    </div>
+        <div id="cont" class="container mt-4">
+            <div class="w-50 mx-auto">
+                <div>
+                    <select id="saved" class="form-control mb-2">
+                        <option value="all">Saved & Not saved</option>
+                        <option value="true">Saved</option>
+                        <option value="false">Not saved</option>
+                    </select>
                 </div>
-                <?php
-            } else {
-                ?>
-                <form id="learn-form" class="mx-auto" action="" method="get">
-                    <div>
-                        <select class="form-control mb-2" name="saved">
-                            <option value="all">Saved & Not saved</option>
-                            <option value="true">Saved</option>
-                            <option value="false">Not saved</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select class="form-control mb-2" name="count">
-                            <option>10</option>
-                            <option>20</option>
-                            <option>50</option>
-                            <option>100</option>
-                        </select>
-                    </div>
-                    <div class="text-center">
-                        <button class="btn btn-primary" type="submit" name="learn">Learn</button>
-                    </div>
-                </form>
-            <?php } ?>
+                <div>
+                    <select id="count" class="form-control mb-2" >
+                        <option>10</option>
+                        <option>20</option>
+                        <option>50</option>
+                        <option>100</option>
+                    </select>
+                </div>
+                <div class="text-center">
+                    <button onclick="learn('start')" class="btn btn-primary" type="submit" name="learn">Learn</button>
+                </div>
+            </div>
         </div>
         <?php Loader::loadFooter() ?>
     </body>
@@ -94,8 +52,8 @@ if (isset($_SESSION['user'])) {
         $(function () {
             $("#explanation").html(words[current].explanation);
         })
-        
-        $("#confirm").click(function() {
+
+        $("#confirm").click(function () {
             var answear = $("#answear").val();
             if (answear == words[current].name) {
                 alert("CORRECT!");

@@ -11,5 +11,36 @@
         var row = btn.parent().parent().parent();
         row.load("includes/save.php?save=" + id);
     }
+    function learn(mode) {
+        if (mode === "start") {
+            var cont = $("#cont");
+            var count = $("#count").val();
+            var saved = $("#saved").val();
+            $.ajax({
+                url: "includes/learnControler.php",
+                type: "get",
+                data: {
+                    "function": mode,
+                    "count": count,
+                    "saved": saved
+                }
+            }).done(function(data) {
+                cont.html(data);
+            });
+        } else if (mode === "answear") {
+            var cont = $("#cont");
+            var answear = $("#answear").val();
+            $.ajax({
+                url: "includes/learnControler.php",
+                type: "get",
+                data: {
+                    "function": mode,
+                    "answear": answear
+                }
+            }).done(function(data) {
+                cont.html(data);
+            });
+        }
+    }
 </script>
 
