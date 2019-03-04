@@ -40,6 +40,17 @@
             }).done(function(data) {
                 cont.html(data);
             });
+        } else if (mode === "load") {
+            var cont = $("#cont");
+            $.ajax({
+                url: "includes/learnControler.php",
+                type: "get",
+                data: {
+                    "function": mode
+                }
+            }).done(function(data) {
+                cont.html(data);
+            });
         }
     }
 </script>

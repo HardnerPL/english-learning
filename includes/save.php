@@ -1,7 +1,5 @@
 <?php
 
-require_once 'loader.php';
-
 if (isset($_SESSION['user'])) {
     $user = $_SESSION['user'];
 } else {
@@ -15,7 +13,6 @@ if (isset($_GET['save']) && isset($user)) {
     die("SHIT");
 }
 ?>
-ELO ELO
 <td class="col-8">
     <div class="font-weight-bold">
         <a class="text-light" href="word.php?id=<?= $word->getId() ?>"><?= $word->getName() ?></a>

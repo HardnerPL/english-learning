@@ -1,5 +1,4 @@
 <?php
-
 require_once 'loader.php';
 
 if (isset($_SESSION['user'])) {
@@ -28,8 +27,9 @@ if (isset($_GET['function'])) {
             $word = Word::fromRow($row);
             array_push($words, $word);
         }
-        $_SESSION['learn'] = $words;
-        $_SESSION['currentLearn'] = $current;
+        $_SESSION['learnWords'] = $words;
+        $_SESSION['learnCurrent'] = $current;
+        $_SESSION['learnScore'] = 0;
         ?>
         <div class="bg-dark text-light p-3 w-50 mx-auto">
             <div class="mx-auto w-50">
@@ -46,14 +46,74 @@ if (isset($_GET['function'])) {
         <?php
     } else if ($inst == "answear") {
         $answear = $_GET['answear'];
-        $words = $_SESSION['learn'];
-        $current = $_SESSION['currentLearn'];
-        if ($answear == $words[$current]->getName()) {
-            echo "GOOD JOB!";
+        $words = $_SESSION['learnWords'];
+        $current = $_SESSION['learnCurrent'];
+        $name = $words[$current]->getName();
+        $synonyms = explode(",", $words[$current]->getSynonyms());
+        foreach ($synonyms as $key => $value) {
+            $synonyms[$key] = trim($value);
+        }
+        if ($answear == $name || $answear == ltrim($name, "to ")) {
+            $_SESSION['learnScore'] += 1;
+            ?>
+            <div class="bg-dark text-light p-3 w-50 mx-auto">
+                <div class="text-center">
+                    <h4>Correct answear!</h4>
+                </div>
+                <hr class="dark-hr">
+                <div class="text-center mt-1">
+                    <button onclick="learn('load')" id="confirm" class="btn btn-primary">Next</button>
+                </div>
+            </div>
+            <?php
         } else {
-            echo "NO! The answear was " . $words[$current]->getName();
+            ?>
+            <div class="bg-dark text-light p-3 w-50 mx-auto">
+                <div class="text-center">
+                    <h4>Incorrect! The answear was "<?= $words[$current]->getName() ?>"</h4>
+                </div>
+                <hr class="dark-hr">
+                <div class="text-center mt-1">
+                    <button onclick="learn('load')" id="confirm" class="btn btn-primary">Next</button>
+                </div>
+            </div>
+            <?php
+        }
+    } else if ($inst == "load") {
+        $words = $_SESSION['learnWords'];
+        $_SESSION['learnCurrent'] += 1;
+        $current = $_SESSION['learnCurrent'];
+        if ($current < sizeof($words)) {
+            ?>
+            <div class="bg-dark text-light p-3 w-50 mx-auto">
+                <div class="mx-auto w-50">
+                    <input class="form-control" id="answear" type="text" placeholder="Your answear"></input>
+                </div>
+                <hr class="dark-hr">
+                <div class="font-weight-light">
+                    <?= $words[$current]->getDefinition() ?>
+                </div>
+                <div class="text-center mt-1">
+                    <button onclick="learn('answear')" id="confirm" class="btn btn-primary">Answear</button>
+                </div>
+            </div>
+            <?php
+        } else {
+            $score = $_SESSION['learnScore'];
+            ?>
+            <div class="bg-dark text-light p-3 w-50 mx-auto">
+                <div class="text-center">
+                    <h4>You're done! Your score: <?= $score . "/" . $current ?></h4>
+                </div>
+            </div>
+            <?php
         }
     }
+}
+
+function asd() {
+    $current = "asd";
+    $words = array();
 }
 ?>
 

@@ -55,7 +55,7 @@ class Word {
     }
 
     function getName() {
-        return $this->name;
+        return trim($this->name);
     }
 
     function getExplanation() {
