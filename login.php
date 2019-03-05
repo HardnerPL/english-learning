@@ -3,8 +3,7 @@
 <?php
 require_once 'includes/Loader/Loader.php';
 
-$loader = new Loader('user');
-$loader->load();
+(new Loader('user'))->load();
 
 $loginResult = "";
 if (isset($_POST['login'])) {
@@ -20,12 +19,9 @@ if (isset($_POST['login'])) {
         $loginResult = "SUCCESS";
         header("Location: index.php");
     }
-} else if (isset($_GET['logout'])) {
-    unset($_SESSION['user']);
-    header("Location: index.php");
 }
 
 $display = new Display();
-$display->addTemplate('login');
+$display->setTemplates('loginForm');
+$display->setScripts('scripts');
 $display->display();
-?>

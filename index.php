@@ -8,9 +8,9 @@ and open the template in the editor.
 <?php
 require_once 'includes/Loader/Loader.php';
 
-$loader = new Loader();
-$loader->load();
+(new Loader())->load();
 
 $display = new Display();
-$display->addTemplate('table');
+$display->setTemplates('table, sidebar');
+$display->setScripts('scripts');
 $display->display();

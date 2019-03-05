@@ -1,7 +1,7 @@
 <?php
 
-require 'scripts/database.php';
-require 'includes/Display/Display.php';
+require __DIR__ . '/scripts/database.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/english-learning/includes/Display/Display.php';
 
 class Loader {
     

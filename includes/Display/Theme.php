@@ -8,7 +8,7 @@ class Theme {
         $this->theme = $theme;
     }
     
-    public function load($content) {
+    public function load($content, $scripts) {
         require "themes/{$this->theme}/theme.php";
     }
 }
