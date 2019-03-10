@@ -5,13 +5,21 @@
     function logout() {
         $.ajax({
                 url: "includes/Ajax/logout.php"
-            }).done(function() {
+            }).success(function() {
                 location.reload();
             });
     }
     function save(id, btn) {
         var row = btn.parent().parent().parent();
-        row.load("includes/Ajax/save.php?save=" + id);
+        $.ajax({
+                url: "includes/Ajax/save.php",
+                type: "post",
+                data: {
+                    "save": id,
+                }
+            }).done(function(data) {
+                row.html(data);
+            });
     }
     function search() {
         var word = $("#searchWord").val();

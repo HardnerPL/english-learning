@@ -27,21 +27,19 @@ class Word {
     }
 
     static function fromId($id) {
-        global $mysql;
-        $id = $mysql->escape($id);
+        $id = Database::escape($id);
         $query = "SELECT * FROM words WHERE id = $id";
-        $result = $mysql->query($query);
-        if ($row = $mysql->getRow($result)) {
+        $result = Database::query($query);
+        if ($row = Database::getRow($result)) {
             return Word::fromRow($row);
         } return NULL;
     }
 
     static function fromName($name) {
-        global $mysql;
-        $name = $mysql->escape($name);
+        $name = Database::escape($name);
         $query = "SELECT * FROM words WHERE name = '$name'";
-        $result = $mysql->query($query);
-        if ($row = $mysql->getRow($result)) {
+        $result = Database::query($query);
+        if ($row = Database::getRow($result)) {
             return Word::fromRow($row);
         } return NULL;
     }
@@ -95,7 +93,6 @@ class Word {
     }
     
     public static function add($word) {
-        global $mysql;
         $query = "INSERT INTO words (name, explanation, type, `use`, difficulty, synonyms, related, status, userId) VALUES "
                 . "('{$word->getName()}', "
                 . "'{$word->getExplanation()}', "
@@ -106,15 +103,14 @@ class Word {
                 . "'{$word->getRelated()}', "
                 . "'{$word->getStatus()}', "
                 . "'{$word->getUserId()}')";
-        $mysql->query($query);
+        Database::query($query);
     }
     
     public static function isWordCreated($name) {
-        global $mysql;
-        $name = $mysql->escape($name);
+        $name = Database::escape($name);
         $query = "SELECT * FROM words WHERE name = '$name'";
-        $mysql->query($query);
-        if ($mysql->resultCount() != 0) {
+        Database::query($query);
+        if (Database::resultCount() != 0) {
             return true;
         } return false;
     }
