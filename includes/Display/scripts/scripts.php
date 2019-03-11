@@ -45,7 +45,7 @@
             var count = $("#count").val();
             var saved = $("#saved").val();
             $.ajax({
-                url: "includes/learnControler.php",
+                url: "includes/Ajax/learnControler.php",
                 type: "get",
                 data: {
                     "function": mode,
@@ -59,7 +59,7 @@
             var cont = $("#cont");
             var answear = $("#answear").val();
             $.ajax({
-                url: "includes/learnControler.php",
+                url: "includes/Ajax/learnControler.php",
                 type: "get",
                 data: {
                     "function": mode,
@@ -71,7 +71,7 @@
         } else if (mode === "load") {
             var cont = $("#cont");
             $.ajax({
-                url: "includes/learnControler.php",
+                url: "includes/Ajax/learnControler.php",
                 type: "get",
                 data: {
                     "function": mode

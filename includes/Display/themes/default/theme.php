@@ -5,7 +5,7 @@
         <div class="container mt-4">
             <div class="row">
                 <?php
-                foreach ($content as $template) {
+                foreach ($templates as $template) {
                     $template->load();
                 }
                 ?>
