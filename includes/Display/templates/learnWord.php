@@ -11,43 +11,45 @@ global $user;
         <?= nl2br($word->getExplanation()) ?>
     </div>
     <hr class="dark-hr">
-    <?php
-    $stars = $user->getWordStars($word->getId());
-    if (isset($stars)) {
-        switch ($stars) {
-            case 5:
-                $textColor = "text-color-gold";
-                break;
-            case 4:
-                $textColor = "text-color-silver";
-                break;
-            case 3:
-                $textColor = "text-color-brown";
-                break;
-            default:
-                $textColor = "";
+    <div>
+        <?php
+        $stars = $user->getWordStars($word->getId());
+        if (isset($stars)) {
+            switch ($stars) {
+                case 5:
+                    $textColor = "text-color-gold";
+                    break;
+                case 4:
+                    $textColor = "text-color-silver";
+                    break;
+                case 3:
+                    $textColor = "text-color-brown";
+                    break;
+                default:
+                    $textColor = "";
+            }
+            ?>
+            <b>Last trained:</b> <?= $user->getWordLessonDate($word->getId()) ?><br>
+            <b>Streak:</b> <?= $user->getWordStreak($word->getId()) ?><br>
+            <div><b>Your level: </b><span class='<?= $textColor ?>'><?php
+                    for ($i = 0; $i < 5; $i++) {
+                        if ($stars > 0) {
+                            echo "<i class='fas fa-star'></i>";
+                            $stars--;
+                        } else {
+                            echo "<i class='far fa-star'></i>";
+                        }
+                    }
+                    ?></span></div>
+            <!--  !-->
+        <?php } else { ?>
+            <div class="mt-2">
+                <a onclick="save(<?= $word->getId() ?>, $(this))" class="btn btn-primary">Save</a>
+            </div>
+            <?php
         }
         ?>
-        <b>Last trained:</b> <?= $user->getWordLessonDate($word->getId()) ?><br>
-        <b>Streak:</b> <?= $user->getWordStreak($word->getId()) ?><br>
-        <div><b>Your level: </b><span class='<?= $textColor ?>'><?php
-                for ($i = 0; $i < 5; $i++) {
-                    if ($stars > 0) {
-                        echo "<i class='fas fa-star'></i>";
-                        $stars--;
-                    } else {
-                        echo "<i class='far fa-star'></i>";
-                    }
-                }
-                ?></span></div>
-        <!--  !-->
-    <?php } else { ?>
-        <div class="mt-2">
-            <a onclick="save(<?= $word->getId() ?>, $(this))" class="btn btn-primary">Save</a>
-        </div>
-        <?php
-    }
-    ?>
+    </div>
     <hr class="dark-hr">
     <b>Type:</b> <?= ucfirst($word->getType()) ?><br>
     <b>Acceptable:</b> <?= ucfirst($word->getUse()) ?><br>

@@ -12,5 +12,5 @@ require_once 'includes/Loader/Loader.php';
 
 $display = new Display();
 $display->setTemplates('table, sidebar');
-$display->setScripts('scripts');
+$display->setScripts('tableScripts');
 $display->display();

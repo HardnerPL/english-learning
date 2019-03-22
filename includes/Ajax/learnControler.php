@@ -8,13 +8,13 @@ if (isset($_SESSION['user'])) {
     die("NO SESSION");
 }
 
-if (isset($_GET['function'])) {
-    $inst = $_GET['function'];
+if (isset($_POST['function'])) {
+    $inst = $_POST['function'];
     if ($inst == "start") {
         unset($_SESSION['learn']);
         
-        $saved = $_GET['saved'];
-        $count = $_GET['count'];
+        $saved = $_POST['saved'];
+        $count = $_POST['count'];
         $words = array();
         $current = 0;
         
@@ -37,26 +37,32 @@ if (isset($_GET['function'])) {
         
         (new Template('learnQuestion'))->load();
         
-    } else if ($inst == "answear") {
-        $answear = $_GET['answear'];
+    } else if ($inst == "answer") {
+        $answer = ltrim($_POST['answer'], "to ");
         $words = $_SESSION['learnWords'];
         $current = $_SESSION['learnCurrent'];
         $word = $words[$current];
         $synonyms = explode(",", $word->getSynonyms());
         foreach ($synonyms as $key => $value) {
-            $synonyms[$key] = trim($value);
+            $synonyms[$key] = ltrim(trim($value), "to ");
         }
-        if ($answear == $word->getName() || $answear == ltrim($word->getName(), "to ")) {
+        
+        if ($answer == ltrim($word->getName(), "to ")) {
             array_push($_SESSION['learnScore'], 1);
+            $_SESSION['learnCurrent'] += 1;
             (new Template('learnCorrect'))->load();
+            (new Template('learnWord'))->load();
+        } else if (!empty($answer) && in_array($answer, $synonyms)) {
+            //(new Template('learnSynonym'))->load();
+            (new Template('learnQuestion'))->load();
         } else {
             array_push($_SESSION['learnScore'], 0);
+            $_SESSION['learnCurrent'] += 1;
             (new Template('learnIncorrect'))->load();
+            (new Template('learnWord'))->load();
         }
-        (new Template('learnWord'))->load();
     } else if ($inst == "load") {
         $words = $_SESSION['learnWords'];
-        $_SESSION['learnCurrent'] += 1;
         $current = $_SESSION['learnCurrent'];
         if ($current < sizeof($words)) {
             (new Template('learnQuestion'))->load();

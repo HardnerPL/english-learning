@@ -23,5 +23,4 @@ if (isset($_POST['login'])) {
 
 $display = new Display();
 $display->setTemplates('loginForm');
-$display->setScripts('scripts');
 $display->display();

@@ -15,6 +15,6 @@ if (isset($_SESSION['user'])) {
 
 $display = new Display();
 $display->setTemplates('learnSettings');
-$display->setScripts('scripts, learnScripts');
+$display->setScripts('learnScripts');
 $display->display();
 

@@ -15,6 +15,7 @@
     <?php require 'footer.php' ?>
 </body>
 <?php
+(new Script('coreScripts'))->load();
 foreach ($scripts as $script) {
     $script->load();
 }

@@ -16,7 +16,7 @@
             </select>
         </div>
         <div class="text-center">
-            <button onclick="learn('start')" class="btn btn-primary" type="submit" name="learn">Learn</button>
+            <button onclick="learn('start')" class="btn btn-primary" type="submit" name="learn">Start</button>
         </div>
     </div>
 </div>

@@ -1,6 +1,6 @@
-<div class="bg-dark text-light p-3 w-50 mx-auto">
+<div class="bg-dark text-light p-3 mx-auto mb-2">
     <div class="text-center">
-        <h4>Correct answear!</h4>
+        <h4>Correct answer!</h4>
     </div>
     <hr class="dark-hr">
     <div class="text-center mt-1">
