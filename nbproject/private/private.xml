@@ -2,6 +2,15 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/D:/Programming/xampp/htdocs/english-learning/includes/Loader/Loader.php</file>
+            <file>file:/D:/Programming/xampp/htdocs/english-learning/includes/Display/templates/sidebar.php</file>
+            <file>file:/D:/Programming/xampp/htdocs/english-learning/includes/Display/scripts/wordScripts.php</file>
+            <file>file:/D:/Programming/xampp/htdocs/english-learning/includes/Display/templates/word.php</file>
+            <file>file:/D:/Programming/xampp/htdocs/english-learning/word.php</file>
+            <file>file:/D:/Programming/xampp/htdocs/english-learning/includes/Display/scripts/tableScripts.php</file>
+            <file>file:/D:/Programming/xampp/htdocs/english-learning/contribute.php</file>
+            <file>file:/D:/Programming/xampp/htdocs/english-learning/includes/Display/templates/table.php</file>
+        </group>
     </open-files>
 </project-private>
