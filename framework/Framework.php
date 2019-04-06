@@ -1,6 +1,6 @@
 <?php
 
-require "Database.php";
+require "dejtabejs.php";
 
 class Framework {
     
