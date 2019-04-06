@@ -1,8 +1,8 @@
 <?php
 
-require "dejtabejs.php";
+require "Database.php";
 
-class fremwork {
+class Framework {
     
     public function view($filename, $data) {
         require 'view/templates/'.$filename.'.php';
