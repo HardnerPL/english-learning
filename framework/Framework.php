@@ -2,7 +2,7 @@
 
 require "dejtabejs.php";
 
-class Framework {
+class fremwork {
     
     public function view($filename, $data) {
         require 'view/templates/'.$filename.'.php';
