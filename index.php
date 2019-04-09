@@ -9,6 +9,8 @@ and open the template in the editor.
 
 require 'controler/Controler.php';
 
+echo $_SERVER['REQUEST_URI'];
+
 $query = "SELECT * FROM words WHERE status = 'accepted'";
 if (isset($_POST['search'])) {
     $search = Database::escape($_POST['search']);
