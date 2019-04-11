@@ -106,6 +106,37 @@ class Word {
         Database::query($query);
     }
     
+    public static function getWords($data)
+    {
+        $query = "SELECT * FROM words WHERE status = 'accepted'";
+        if (isset($data['name'])) {
+            $name = Database::escape($data['name']);
+            $query .= " AND name LIKE '%$name%'";
+        }
+        if (isset($data['saved']) && isset($data['user'])) {
+            $saved = $data['saved'];
+            $user = $data['user'];
+            if ($saved == "true") {
+                $query .= " AND id IN (SELECT wordId FROM user_words WHERE userId = '{$user->getId()}')";
+            } else if ($saved == "false") {
+                $query .= " AND id NOT IN (SELECT wordId FROM user_words WHERE userId = '{$user->getId()}')";
+            }
+        }
+        if (isset($data['type'])) {
+            $type = $data['type'];
+            if ($type != "all") {
+                $query .= " AND type = '$type'";
+            }
+        }
+        
+        $words = array();
+        $wordsQueryResult = Database::query($query);
+        while ($row = Database::getRow($wordsQueryResult)) {
+            array_push($words, Word::fromRow($row));
+        }
+        return $words;
+    }
+    
     public static function isWordCreated($name) {
         $name = Database::escape($name);
         $query = "SELECT * FROM words WHERE name = '$name'";

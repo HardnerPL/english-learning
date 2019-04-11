@@ -2,20 +2,26 @@
 
 require_once 'framework/Framework.php';
 
-class Controler extends Framework {
+class Pages extends Framework {
 
     public function __construct($page = NULL) {
         $this->model('User');
         $this->model('Word');
-        $this->model('Session');
+        $this->library('SessionManager');
     }
-    
+
     public function index() {
+        $data = array();
+        $data['words'] = Word::getWords($data);
+        
         $this->view('header', $data);
         $this->view('navbar', $data);
         
-        $data['words'] = Word::getWords();
-        
+        $this->view('table', $data);
+        $this->view('sidebar', $data);
+
+        $this->script('coreScripts');
         $this->view('footer', $data);
     }
+
 }

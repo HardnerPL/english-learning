@@ -1,6 +1,9 @@
 <?php
 
+session_start();
+
 require "Database.php";
+require "Router.php";
 
 class Framework {
     
