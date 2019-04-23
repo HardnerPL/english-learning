@@ -9,4 +9,4 @@ and open the template in the editor.
 
 require 'framework/Framework.php';
 
-Router::route();
+$router = new Router('pages', 'index', false);
