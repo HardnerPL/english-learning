@@ -13,7 +13,7 @@ $words = $data['words'];
             foreach ($words as $word) {
                 $data['word'] = $word;
                 $data['user'] = $user;
-                include 'tableRow';
+                include 'tableRow.php';
             }
             ?>
         </table>

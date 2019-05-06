@@ -12,7 +12,9 @@ function sessionDestroy()
 
 function sessionGet($name) 
 {
-    return $_SESSION[$name];
+    if (isset($_SESSION[$name])) {
+        return $_SESSION[$name];
+    } else return NULL;
 }
 
 function sessionSet($name, $value)

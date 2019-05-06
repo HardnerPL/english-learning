@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 
 <?php
+define("ROOT", $_SERVER['DOCUMENT_ROOT'] . '/english-learning/');
+require_once ROOT . "controller/Home.php";
 
-require 'framework/Framework.php';
-
-$router = new Router('pages', 'index', false);
+(new Home())->index();

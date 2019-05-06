@@ -1,6 +1,5 @@
 <?php
+define("ROOT", $_SERVER['DOCUMENT_ROOT'] . '/english-learning/');
+require_once ROOT . "controller/Home.php";
 
-require_once '../Loader/Loader.php';
-
-(new Loader())->load();
-unset($_SESSION['user']);
+(new Home())->login('logout');

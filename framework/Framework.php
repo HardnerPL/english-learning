@@ -1,26 +1,23 @@
 <?php
 
-session_start();
-
-require "Database.php";
-require "Router.php";
-
 abstract class Framework {
     
     public function view($filename, $data) {
-        include 'view/templates/'.$filename.'.php';
+        include ROOT . 'view/templates/'.$filename.'.php';
     }
     
     public function script($filename) {
-        require_once 'view/scripts/'.$filename.'.php';
+        require_once ROOT . 'view/scripts/'.$filename.'.php';
     }
     
     public function model($filename) {
-        require_once 'model/'.$filename.'.php';
+        require_once ROOT . 'model/'.$filename.'.php';
     }
     
     public function library($filename) {
-        require_once 'library/'.$filename.'.php';
+        require_once ROOT . 'library/'.$filename.'.php';
     }
 }
+
+
 

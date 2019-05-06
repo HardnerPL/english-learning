@@ -25,8 +25,8 @@ if (isset($_POST['function'])) {
             $query .= " AND id NOT IN (SELECT wordId FROM user_words WHERE userId = '{$user->getId()}')";
         }
         $query .= " ORDER BY RAND() LIMIT $count";
-        $result = Database::query($query);
-        while ($row = Database::getRow($result)) {
+        $result = DatabaseManager::query($query);
+        while ($row = DatabaseManager::getRow($result)) {
             $word = Word::fromRow($row);
             array_push($words, $word);
         }

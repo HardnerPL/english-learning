@@ -1,6 +1,6 @@
 <?php
 
-class Database {
+class DatabaseManager {
 
     public static $link;
 
@@ -35,4 +35,4 @@ class Database {
     }
 }
 
-Database::link();
+DatabaseManager::link();

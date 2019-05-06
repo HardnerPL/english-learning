@@ -4,7 +4,11 @@
 <script>
     function logout() {
         $.ajax({
-                url: "includes/Ajax/logout.php"
+            url: "includes/Ajax/logout.php",
+            type: "post",
+            data: {
+                "logout": true,
+            }
             }).success(function() {
                 location.reload();
             });

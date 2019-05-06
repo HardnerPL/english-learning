@@ -13,13 +13,13 @@ if (isset($_SESSION['user'])) {
 }
 
 if (isset($_POST['contribute'])) {
-    $name = Database::escape(strtolower($_POST['name']));
-    $explanation = Database::escape($_POST['explanation']);
-    $type = Database::escape(strtolower($_POST['type']));
-    $use = Database::escape(strtolower($_POST['use']));
-    $difficulty = Database::escape(strtolower($_POST['difficulty']));
-    $synonyms = Database::escape(strtolower($_POST['synonyms']));
-    $related = Database::escape(strtolower($_POST['related']));
+    $name = DatabaseManager::escape(strtolower($_POST['name']));
+    $explanation = DatabaseManager::escape($_POST['explanation']);
+    $type = DatabaseManager::escape(strtolower($_POST['type']));
+    $use = DatabaseManager::escape(strtolower($_POST['use']));
+    $difficulty = DatabaseManager::escape(strtolower($_POST['difficulty']));
+    $synonyms = DatabaseManager::escape(strtolower($_POST['synonyms']));
+    $related = DatabaseManager::escape(strtolower($_POST['related']));
     if($user->getRole() == 'admin' || $user->getRole() == 'approved') {
         $status = 'accepted';
     } else {

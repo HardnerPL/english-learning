@@ -27,19 +27,19 @@ class Word {
     }
 
     static function fromId($id) {
-        $id = Database::escape($id);
+        $id = DatabaseManager::escape($id);
         $query = "SELECT * FROM words WHERE id = $id";
-        $result = Database::query($query);
-        if ($row = Database::getRow($result)) {
+        $result = DatabaseManager::query($query);
+        if ($row = DatabaseManager::getRow($result)) {
             return Word::fromRow($row);
         } return NULL;
     }
 
     static function fromName($name) {
-        $name = Database::escape($name);
+        $name = DatabaseManager::escape($name);
         $query = "SELECT * FROM words WHERE name = '$name'";
-        $result = Database::query($query);
-        if ($row = Database::getRow($result)) {
+        $result = DatabaseManager::query($query);
+        if ($row = DatabaseManager::getRow($result)) {
             return Word::fromRow($row);
         } return NULL;
     }
@@ -103,14 +103,14 @@ class Word {
                 . "'{$word->getRelated()}', "
                 . "'{$word->getStatus()}', "
                 . "'{$word->getUserId()}')";
-        Database::query($query);
+        DatabaseManager::query($query);
     }
     
     public static function getWords($data)
     {
         $query = "SELECT * FROM words WHERE status = 'accepted'";
         if (isset($data['name'])) {
-            $name = Database::escape($data['name']);
+            $name = DatabaseManager::escape($data['name']);
             $query .= " AND name LIKE '%$name%'";
         }
         if (isset($data['saved']) && isset($data['user'])) {
@@ -130,18 +130,18 @@ class Word {
         }
         
         $words = array();
-        $wordsQueryResult = Database::query($query);
-        while ($row = Database::getRow($wordsQueryResult)) {
+        $wordsQueryResult = DatabaseManager::query($query);
+        while ($row = DatabaseManager::getRow($wordsQueryResult)) {
             array_push($words, Word::fromRow($row));
         }
         return $words;
     }
     
     public static function isWordCreated($name) {
-        $name = Database::escape($name);
+        $name = DatabaseManager::escape($name);
         $query = "SELECT * FROM words WHERE name = '$name'";
-        Database::query($query);
-        if (Database::resultCount() != 0) {
+        DatabaseManager::query($query);
+        if (DatabaseManager::resultCount() != 0) {
             return true;
         } return false;
     }
