@@ -17,8 +17,8 @@ class Home extends Framework {
         sessionStart();
 
         $data = array();
-        $data['words'] = Word::getWords($data);
         $data['user'] = User::getUser();
+        $data['words'] = Word::getWords($data);
         $data['title'] = "English Learning";
         
         $this->view('header', $data);
@@ -28,6 +28,8 @@ class Home extends Framework {
         $this->view('sidebar', $data);
 
         $this->script('coreScripts');
+        $this->script('tableScripts');
+
         $this->view('footer', $data);
     }
 

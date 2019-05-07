@@ -63,7 +63,7 @@ class User {
         return $row['lessons'];
     }
 
-    function getSaved() {
+    function getSavedCount() {
         $query = "SELECT wordId FROM user_words WHERE userId = '{$this->id}'";
         DatabaseManager::query($query);
         return DatabaseManager::resultCount();
@@ -79,6 +79,12 @@ class User {
         $query = "SELECT stars FROM user_words WHERE userId = '{$this->id}' AND wordId = '$id'";
         $result = DatabaseManager::query($query);
         return DatabaseManager::getRow($result)['stars'];
+    }
+
+    public function getWordSaved($id) {
+        $query = "SELECT * FROM user_words WHERE userId = '{$this->id}' AND wordId = '$id'";
+        DatabaseManager::query($query);
+        return DatabaseManager::resultCount() > 0 ? true : false;
     }
 
     function getWordLessonDate($id) {
@@ -164,7 +170,7 @@ class User {
     }
 
     public static function getUser() {
-        sessionGet('user');
+        return sessionGet('user');
     }
 
     public static function login() {

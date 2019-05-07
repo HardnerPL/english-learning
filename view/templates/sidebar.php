@@ -6,35 +6,35 @@ if (isset($_SESSION['user'])) {
 <div class="col">
     <div class="bg-dark p-3 mb-4">
         <h4 class="text-center text-light">Word finder</h4>
-        <div class="mr-2">
+        <form class="mr-2" action="index.php" method="get">
             <div class="input-group">
-                <input class="form-control" type="text" id="searchWord" placeholder="Search" value="<?php
-                if (isset($search)) {
-                    echo $search;
+                <input class="form-control" type="text" name="name" placeholder="Search" value="<?php
+                if (isset($_GET['name'])) {
+                    echo $_GET['name'];
                 }
                 ?>">
                 <span class="input-group-append">
-                    <button onclick="search()" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
                 </span>
             </div>
             <div class="form-inline mt-2">
                 <div class="mr-2 w-40 mr-2">
-                    <select class="form-control-sm" id="searchSaved">
+                    <select class="form-control-sm" name="saved">
                         <option value="all">All</option>
-                        <option value="true" <?= isset($saved) && $saved == "true" ? "selected" : "" ?>>Saved</option>
-                        <option value="false" <?= isset($saved) && $saved == "false" ? "selected" : "" ?>>Not saved</option>
+                        <option value="true" <?= isset($_GET['saved']) && $_GET['saved'] == "true" ? "selected" : "" ?>>Saved</option>
+                        <option value="false" <?= isset($_GET['saved']) && $_GET['saved'] == "false" ? "selected" : "" ?>>Not saved</option>
                     </select>
                 </div>
                 <div class="w-40">
-                    <select class="form-control-sm" id="searchType">
+                    <select class="form-control-sm" name="type">
                         <option value="all">All types</option>
-                        <option value="noun" <?= isset($type) && $type == "noun" ? "selected" : "" ?>>Noun</option>
-                        <option value="verb" <?= isset($type) && $type == "verb" ? "selected" : "" ?>>Verb</option>
-                        <option value="phrase" <?= isset($type) && $type == "phrase" ? "selected" : "" ?>>Phrase</option>
+                        <option value="noun" <?= isset($_GET['type']) && $_GET['type'] == "noun" ? "selected" : "" ?>>Noun</option>
+                        <option value="verb" <?= isset($_GET['type']) && $_GET['type'] == "verb" ? "selected" : "" ?>>Verb</option>
+                        <option value="phrase" <?= isset($_GET['type']) && $_GET['type'] == "phrase" ? "selected" : "" ?>>Phrase</option>
                     </select>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
     <?php if (!isset($user)) { ?>
         <div class="bg-dark p-3 mb-4">
@@ -61,7 +61,7 @@ if (isset($_SESSION['user'])) {
             <div class="text-light">
                 <b>Points:</b> <?= $user->getPoints() ?><br>
                 <b>Lessons:</b> <?= $user->getLessons() ?><br>
-                <b>Saved:</b> <?= $user->getSaved() ?><br>
+                <b>Saved:</b> <?= $user->getSavedCount() ?><br>
                 <i class="text-color-gold fas fa-star"></i> <?= $user->getStars(5) ?>
                 <i class="text-color-silver fas fa-star"></i> <?= $user->getStars(4) ?>
                 <i class="text-color-brown fas fa-star"></i> <?= $user->getStars(3) ?>

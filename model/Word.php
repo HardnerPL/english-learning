@@ -109,12 +109,12 @@ class Word {
     public static function getWords($data)
     {
         $query = "SELECT * FROM words WHERE status = 'accepted'";
-        if (isset($data['name'])) {
-            $name = DatabaseManager::escape($data['name']);
+        if (isset($_GET['name'])) {
+            $name = DatabaseManager::escape($_GET['name']);
             $query .= " AND name LIKE '%$name%'";
         }
-        if (isset($data['saved']) && isset($data['user'])) {
-            $saved = $data['saved'];
+        if (isset($_GET['saved']) && isset($data['user'])) {
+            $saved = $_GET['saved'];
             $user = $data['user'];
             if ($saved == "true") {
                 $query .= " AND id IN (SELECT wordId FROM user_words WHERE userId = '{$user->getId()}')";
@@ -122,8 +122,8 @@ class Word {
                 $query .= " AND id NOT IN (SELECT wordId FROM user_words WHERE userId = '{$user->getId()}')";
             }
         }
-        if (isset($data['type'])) {
-            $type = $data['type'];
+        if (isset($_GET['type'])) {
+            $type = $_GET['type'];
             if ($type != "all") {
                 $query .= " AND type = '$type'";
             }

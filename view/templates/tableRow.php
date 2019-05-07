@@ -1,6 +1,4 @@
 <?php
-$user = $data['user'];
-$word = $data['word'];
 
 if (isset($user)) {
     $stars = $user->getWordStars($word->getId());
@@ -30,15 +28,16 @@ if (isset($user)) {
         </div>
     </td>
     <td class="col-4">
+
         <b>Type:</b> <?= ucfirst($word->getType()) ?><br>
         <b>Use:</b> <?= ucfirst($word->getUse()) ?><br>
         <b>Difficulty:</b> <?= ucfirst($word->getDifficulty()) ?><br>
         <?php 
-        if (isset($user)) {
+        if (isset($user) && $user->getWordSaved($word->getId())) {
         ?>
         <div>
             <b>Your level: </b>
-            <span class='<?= $textColor ?>'>
+            <span class='<?= $starColor ?>'>
                 <?php
                 for ($i = 0; $i < 5; $i++) {
                     if ($stars > 0) {
