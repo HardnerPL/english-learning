@@ -136,6 +136,15 @@ class Word {
         }
         return $words;
     }
+
+    public static function getSelectedWord()
+    {
+        if (isset($_GET['id'])) {
+            return Word::fromId($_GET['id']);
+        } else {
+            return NULL;
+        }
+    }
     
     public static function isWordCreated($name) {
         $name = DatabaseManager::escape($name);

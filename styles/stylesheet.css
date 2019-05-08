@@ -2,6 +2,15 @@ html, body {
     height: 100%;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1 0 auto;
+}
+
 .text-color-brown {
     color: brown;
 }
@@ -25,4 +34,8 @@ html, body {
 
 #learn-form {
     width: 30%;
+}
+
+#footer {
+    flex-shrink: 0;
 }

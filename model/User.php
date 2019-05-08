@@ -13,7 +13,7 @@ class User {
      * @param type $username
      * @param type $password
      */
-    function __construct($id, $username, $password) {
+    public function __construct($id, $username, $password) {
         $this->id = $id;
         $this->username = DatabaseManager::escape($username);
         $this->password = $password;
@@ -25,7 +25,7 @@ class User {
      * @param type $username
      * @return \User
      */
-    function fromUsername($username) {
+    public function fromUsername($username) {
         $query = "SELECT * FROM users WHERE username = '$username'";
         $result = DatabaseManager::query($query);
         if (DatabaseManager::resultCount() == 0) {
@@ -37,45 +37,45 @@ class User {
         }
     }
 
-    function getId() {
+    public function getId() {
         return $this->id;
     }
 
-    function getUsername() {
+    public function getUsername() {
         return $this->username;
     }
 
-    function getPassword() {
+    public function getPassword() {
         return $this->password;
     }
 
-    function getRole() {
+    public function getRole() {
         $query = "SELECT role FROM users WHERE username = '{$this->username}'";
         $result = DatabaseManager::query($query);
         $row = DatabaseManager::getRow($result);
         return $row['role'];
     }
 
-    function getLessons() {
+    public function getLessons() {
         $query = "SELECT lessons FROM users WHERE username = '{$this->username}'";
         $result = DatabaseManager::query($query);
         $row = DatabaseManager::getRow($result);
         return $row['lessons'];
     }
 
-    function getSavedCount() {
+    public function getSavedCount() {
         $query = "SELECT wordId FROM user_words WHERE userId = '{$this->id}'";
         DatabaseManager::query($query);
         return DatabaseManager::resultCount();
     }
 
-    function getStars($count) {
+    public function getStars($count) {
         $query = "SELECT wordId FROM user_words WHERE userId = '{$this->id}' AND stars = $count";
         DatabaseManager::query($query);
         return DatabaseManager::resultCount();
     }
 
-    function getWordStars($id) {
+    public function getWordStars($id) {
         $query = "SELECT stars FROM user_words WHERE userId = '{$this->id}' AND wordId = '$id'";
         $result = DatabaseManager::query($query);
         return DatabaseManager::getRow($result)['stars'];
@@ -87,7 +87,7 @@ class User {
         return DatabaseManager::resultCount() > 0 ? true : false;
     }
 
-    function getWordLessonDate($id) {
+    public function getWordLessonDate($id) {
         $query = "SELECT lessonDate FROM user_words WHERE userId = '{$this->id}' AND wordId = '$id'";
         $result = DatabaseManager::query($query);
         if ($date = DatabaseManager::getRow($result)['lessonDate']) {
@@ -96,7 +96,7 @@ class User {
         return "Never";
     }
     
-    function getWordStreak($id) {
+    public function getWordStreak($id) {
         $query = "SELECT streak FROM user_words WHERE userId = '{$this->id}' AND wordId = '$id'";
         $result = DatabaseManager::query($query);
         return DatabaseManager::getRow($result)['streak'];
@@ -123,7 +123,7 @@ class User {
 //        }
 //    }
 
-    function getPoints() {
+    public function getPoints() {
         $points = $this->getStars(1);
         $points += $this->getStars(2) * 20;
         $points += $this->getStars(3) * 40;
@@ -135,8 +135,13 @@ class User {
         return $points;
     }
 
-    function verifyPassword($password) {
+    public function verifyPassword($password) {
         return password_verify($password, $this->password);
+    }
+
+    public function saveWord($id) {
+        $query = "INSERT INTO user_words (wordId, userId) VALUES ('$id', '{$this->getId()}')";
+        DatabaseManager::query($query);
     }
 
     static function add($user) {
@@ -164,16 +169,12 @@ class User {
         return $users;
     }
 
-    function saveWord($id) {
-        $query = "INSERT INTO user_words (wordId, userId) VALUES ('$id', '{$this->getId()}')";
-        DatabaseManager::query($query);
-    }
-
     public static function getUser() {
         return sessionGet('user');
     }
 
-    public static function login() {
+    public static function login()
+    {
         $loginResult = "";
         if (isset($_POST['login'])) {
             $username = $_POST['username'];
@@ -187,6 +188,30 @@ class User {
                 $_SESSION['user'] = $user;
                 $loginResult = "SUCCESS";
                 header("Location: index.php");
+            }
+        }
+    }
+
+    public static function register()
+    {
+        if (isset($_POST['register'])) {
+            $username = DatabaseManager::escape($_POST['username']);
+            $password = $_POST['password'];
+            $repeatPassword = $_POST['repeatPassword'];
+            if (strlen($password) < 8) {
+                return "PASSWORD_TOO_SHORT";
+            } else if (strlen($username) > 32) {
+                return "USERNAME_TOO_LONG";
+            } else if (User::isUsernameFree($username)) {
+                return "USERNAME_IN_USE";
+            }
+            // TO DO: INCLUDES_ILLEGAL_CHARACTERS
+            else if ($password != $repeatPassword) {
+                return "DIFFERENT_PASSWORDS";
+            } else {
+                $user = new User(0, $username, password_hash($password, PASSWORD_DEFAULT));
+                User::add($user);
+                return "SUCCESS";
             }
         }
     }
