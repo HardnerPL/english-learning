@@ -1,5 +1,5 @@
-RewriteEngine On
+RewriteEngine Off
 RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.+)$ jacynosoft/english-learning/index.php [QSA,L]
+RewriteRule ^(.+)$ english-learning/index.php [QSA,L]
