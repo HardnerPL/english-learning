@@ -11,9 +11,7 @@ $words = $data['words'];
         <table class="table bg-dark text-light table-bordered">
             <?php
             foreach ($words as $word) {
-                $data['word'] = $word;
-                $data['user'] = $user;
-                include 'tableRow';
+                include 'tableRow.php';
             }
             ?>
         </table>

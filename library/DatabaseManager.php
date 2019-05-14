@@ -1,12 +1,12 @@
 <?php
 
-class Database {
+class DatabaseManager {
 
     public static $link;
 
     public static function link() {
         self::$link = mysqli_connect('localhost', 'root', '', 'english-learning');
-        mysqli_set_charset(self::$link, 'utf8');
+        mysqli_set_charset(self::$link, 'utf8mb4');
     }
 
     public static function query($query) {
@@ -35,4 +35,4 @@ class Database {
     }
 }
 
-Database::link();
+DatabaseManager::link();

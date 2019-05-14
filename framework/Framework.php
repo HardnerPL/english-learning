@@ -1,23 +1,23 @@
 <?php
 
-require "Database.php";
-
-class Framework {
-    
+abstract class Framework {  
+  
     public function view($filename, $data) {
-        require 'view/templates/'.$filename.'.php';
+        include ROOT . 'view/templates/'.$filename.'.php';
     }
     
     public function script($filename) {
-        require 'view/scripts/'.$filename.'.php';
+        require_once ROOT . 'view/scripts/'.$filename.'.php';
     }
     
     public function model($filename) {
-        require 'model/'.$filename.'.php';
+        require_once ROOT . 'model/'.$filename.'.php';
     }
     
     public function library($filename) {
-        require 'library/'.$filename.'.php';
+        require_once ROOT . 'library/'.$filename.'.php';
     }
 }
+
+
 

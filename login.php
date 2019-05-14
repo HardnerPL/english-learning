@@ -1,26 +1,13 @@
 <!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
 
 <?php
-require_once 'includes/Loader/Loader.php';
 
-(new Loader('user'))->load();
+define("ROOT", $_SERVER['DOCUMENT_ROOT'] . '/english-learning/');
+require_once ROOT . "controller/Home.php";
 
-$loginResult = "";
-if (isset($_POST['login'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $user = User::fromUsername($username);
-    if (empty($user)) {
-        $loginResult = "NO_USER";
-    } else if (!$user->verifyPassword($password)) {
-        $loginResult = "WRONG_PASSWORD";
-    } else {
-        $_SESSION['user'] = $user;
-        $loginResult = "SUCCESS";
-        header("Location: index.php");
-    }
-}
-
-$display = new Display();
-$display->setTemplates('loginForm');
-$display->display();
+(new Home())->login();

@@ -27,19 +27,19 @@ class Word {
     }
 
     static function fromId($id) {
-        $id = Database::escape($id);
+        $id = DatabaseManager::escape($id);
         $query = "SELECT * FROM words WHERE id = $id";
-        $result = Database::query($query);
-        if ($row = Database::getRow($result)) {
+        $result = DatabaseManager::query($query);
+        if ($row = DatabaseManager::getRow($result)) {
             return Word::fromRow($row);
         } return NULL;
     }
 
     static function fromName($name) {
-        $name = Database::escape($name);
+        $name = DatabaseManager::escape($name);
         $query = "SELECT * FROM words WHERE name = '$name'";
-        $result = Database::query($query);
-        if ($row = Database::getRow($result)) {
+        $result = DatabaseManager::query($query);
+        if ($row = DatabaseManager::getRow($result)) {
             return Word::fromRow($row);
         } return NULL;
     }
@@ -103,14 +103,54 @@ class Word {
                 . "'{$word->getRelated()}', "
                 . "'{$word->getStatus()}', "
                 . "'{$word->getUserId()}')";
-        Database::query($query);
+        DatabaseManager::query($query);
+    }
+    
+    public static function getWords($data)
+    {
+        $query = "SELECT * FROM words WHERE status = 'accepted'";
+        if (isset($_GET['name'])) {
+            $name = DatabaseManager::escape($_GET['name']);
+            $query .= " AND name LIKE '%$name%'";
+        }
+        if (isset($_GET['saved']) && isset($data['user'])) {
+            $saved = $_GET['saved'];
+            $user = $data['user'];
+            if ($saved == "true") {
+                $query .= " AND id IN (SELECT wordId FROM user_words WHERE userId = '{$user->getId()}')";
+            } else if ($saved == "false") {
+                $query .= " AND id NOT IN (SELECT wordId FROM user_words WHERE userId = '{$user->getId()}')";
+            }
+        }
+        if (isset($_GET['type'])) {
+            $type = $_GET['type'];
+            if ($type != "all") {
+                $query .= " AND type = '$type'";
+            }
+        }
+        
+        $words = array();
+        $wordsQueryResult = DatabaseManager::query($query);
+        while ($row = DatabaseManager::getRow($wordsQueryResult)) {
+            array_push($words, Word::fromRow($row));
+        }
+        return $words;
+    }
+
+    public static function getSelectedWord()
+    {
+        if (isset($_GET['id'])) {
+            return Word::fromId($_GET['id']);
+        } else {
+            return NULL;
+        }
     }
     
     public static function isWordCreated($name) {
-        $name = Database::escape($name);
+        $name = DatabaseManager::escape($name);
         $query = "SELECT * FROM words WHERE name = '$name'";
-        Database::query($query);
-        if (Database::resultCount() != 0) {
+        DatabaseManager::query($query);
+        if (DatabaseManager::resultCount() != 0) {
             return true;
         } return false;
     }
