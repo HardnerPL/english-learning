@@ -1,7 +1,7 @@
 <?php
 
-abstract class Framework {
-    
+abstract class Framework {  
+  
     public function view($filename, $data) {
         include ROOT . 'view/templates/'.$filename.'.php';
     }
