@@ -61,7 +61,6 @@ class Home extends Framework
     {
         $this->model('user');
 
-        $data = array();
         $data['title'] = "Register | English Learning";
         User::register();
 

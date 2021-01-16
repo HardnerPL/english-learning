@@ -21,16 +21,29 @@ if (isset($_SESSION['user'])) {
                 <div class="mr-2 w-40 mr-2">
                     <select class="form-control-sm" name="saved">
                         <option value="all">All</option>
-                        <option value="true" <?= isset($_GET['saved']) && $_GET['saved'] == "true" ? "selected" : "" ?>>Saved</option>
-                        <option value="false" <?= isset($_GET['saved']) && $_GET['saved'] == "false" ? "selected" : "" ?>>Not saved</option>
+                        <option value="true" <?= isset($_GET['saved']) && $_GET['saved'] == "true" ? "selected" : "" ?>>
+                            Saved
+                        </option>
+                        <option value="false" <?= isset($_GET['saved']) && $_GET['saved'] == "false" ? "selected" : "" ?>>
+                            Not saved
+                        </option>
                     </select>
                 </div>
                 <div class="w-40">
                     <select class="form-control-sm" name="type">
                         <option value="all">All types</option>
-                        <option value="noun" <?= isset($_GET['type']) && $_GET['type'] == "noun" ? "selected" : "" ?>>Noun</option>
-                        <option value="verb" <?= isset($_GET['type']) && $_GET['type'] == "verb" ? "selected" : "" ?>>Verb</option>
-                        <option value="phrase" <?= isset($_GET['type']) && $_GET['type'] == "phrase" ? "selected" : "" ?>>Phrase</option>
+                        <option value="noun" <?= isset($_GET['type']) && $_GET['type'] == "noun" ? "selected" : "" ?>>
+                            Noun
+                        </option>
+                        <option value="verb" <?= isset($_GET['type']) && $_GET['type'] == "verb" ? "selected" : "" ?>>
+                            Verb
+                        </option>
+                        <option value="phrase" <?= isset($_GET['type']) && $_GET['type'] == "phrase" ? "selected" : "" ?>>
+                            Phrase
+                        </option>
+                        <option value="adjective" <?= isset($_GET['type']) && $_GET['type'] == "adjective" ? "selected" : "" ?>>
+                            Adjective
+                        </option>
                     </select>
                 </div>
             </div>
@@ -77,11 +90,15 @@ if (isset($_SESSION['user'])) {
         <div class="text-light">
             <?php
             $users = User::getLeaderboard();
-            for ($i = 0; $i < sizeof($users); $i++) {
-                if (isset($user) && $user->getUsername() == $users[$i]->getUsername()) {
-                    echo "<b>" . ($i + 1) . ". " . $users[$i]->getUsername() . ": " . $users[$i]->getPoints() . "</b><br>";
-                } else {
-                    echo ($i + 1) . ". " . $users[$i]->getUsername() . ": " . $users[$i]->getPoints() . "<br>";
+            if (!isset($users)) {
+                echo "<div class='text-center'>No users found.</div>";
+            } else {
+                for ($i = 0; $i < sizeof($users); $i++) {
+                    if (isset($user) && $user->getUsername() == $users[$i]->getUsername()) {
+                        echo "<b>" . ($i + 1) . ". " . $users[$i]->getUsername() . ": " . $users[$i]->getPoints() . "</b><br>";
+                    } else {
+                        echo ($i + 1) . ". " . $users[$i]->getUsername() . ": " . $users[$i]->getPoints() . "<br>";
+                    }
                 }
             }
             ?>
