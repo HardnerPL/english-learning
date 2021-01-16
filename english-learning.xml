@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+- phpMyAdmin XML Dump
+- version 4.9.1
+- https://www.phpmyadmin.net
+-
+- Host: 127.0.0.1
+- Generation Time: Jan 16, 2021 at 10:08 PM
+- Server version: 10.4.8-MariaDB
+- PHP Version: 7.3.11
+-->
+
+<pma_xml_export version="1.0" xmlns:pma="https://www.phpmyadmin.net/some_doc_url/">
+    <!--
+    - Structure schemas
+    -->
+    <pma:structure_schemas>
+        <pma:database name="english-learning" collation="utf8mb4_general_ci" charset="utf8mb4">
+            <pma:table name="users">
+                CREATE TABLE `users` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `username` varchar(32) NOT NULL,
+                  `password` varchar(255) NOT NULL,
+                  `points` int(11) NOT NULL,
+                  `lessons` int(11) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+            </pma:table>
+            <pma:table name="user_words">
+                CREATE TABLE `user_words` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `wordId` int(11) NOT NULL,
+                  `userId` int(11) NOT NULL,
+                  `stars` int(11) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            </pma:table>
+            <pma:table name="words">
+                CREATE TABLE `words` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `name` varchar(64) NOT NULL,
+                  `explanation` text NOT NULL,
+                  `type` varchar(32) NOT NULL,
+                  `use` varchar(16) NOT NULL,
+                  `difficulty` int(11) NOT NULL,
+                  `status` varchar(32) NOT NULL,
+                  `userId` int(11) NOT NULL,
+                  `synonyms` varchar(255) NOT NULL,
+                  `related` varchar(255) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+            </pma:table>
+        </pma:database>
+    </pma:structure_schemas>
+
+    <!--
+    - Database: 'english-learning'
+    -->
+    <database name="english-learning">
+        <!-- Table users -->
+        <table name="users">
+            <column name="id">1</column>
+            <column name="username">admin</column>
+            <column name="password">$2y$10$Q8kPsdbTRVcvqY0h4aC0fuh4zRd.yMpBD3Dz3TjX6iI5xeQymPXum</column>
+            <column name="points">0</column>
+            <column name="lessons">0</column>
+        </table>
+        <!-- Table user_words -->
+        <!-- Table words -->
+        <table name="words">
+            <column name="id">1</column>
+            <column name="name">difficult</column>
+            <column name="explanation">needing much effort or skill to accomplish, deal with, or understand.</column>
+            <column name="type">adjective</column>
+            <column name="use">all</column>
+            <column name="difficulty">1</column>
+            <column name="status">accepted</column>
+            <column name="userId">1</column>
+            <column name="synonyms">hard, tough</column>
+            <column name="related">difficulty</column>
+        </table>
+        <table name="words">
+            <column name="id">2</column>
+            <column name="name">hard</column>
+            <column name="explanation">solid, firm, and rigid; not easily broken, bent, or pierced.</column>
+            <column name="type">adjective</column>
+            <column name="use">all</column>
+            <column name="difficulty">1</column>
+            <column name="status">accepted</column>
+            <column name="userId">1</column>
+            <column name="synonyms">difficult, tough</column>
+            <column name="related"></column>
+        </table>
+    </database>
+</pma_xml_export>
