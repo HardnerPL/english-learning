@@ -4,10 +4,6 @@ A website project for learning english vocabulary in a simple, slightly gamified
 
 ## Getting Started
 
-The application is not in a usable state, but in a state good enough to display the overal premise. There could be some errors and some functionalities were never implemented, as well as certain things seem to have gone missing (like a Loader class which I'm pretty sure existed and features like saving that use it worked)
-
-## Getting Started
-
 The application is still in early works and is not functional. It might have errors, and a lot of functionalities don't work at all (for example a Loader class is missing, and it was used for certain functionalities that DID work, like saving! It could be that Loader got changed and renamed to Framework but certain views haven't been updated)
 
 ### Installing
